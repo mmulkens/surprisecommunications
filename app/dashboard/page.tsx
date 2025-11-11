@@ -21,9 +21,10 @@ export default function Dashboard() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gray-50">
+    <main className="flex min-h-screen flex-col items-center justify-center">
       {user ? (
         <>
+          <div className="bg-yellow-50 p-6 rounded-2xl shadow-lg flex-col gap-3">
           <h1 className="text-2xl font-bold mb-4">Welcome, {user.email}</h1>
           <p>Your role for the next trip will appear here.</p>
           <button
@@ -32,6 +33,7 @@ export default function Dashboard() {
           >
             Log out
           </button>
+          </div>
         </>
       ) : (
         <p>Loading...</p>

@@ -22,8 +22,8 @@ export default function HomePage() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gray-50">
-      <div className="bg-white p-6 rounded-2xl shadow-lg flex flex-col gap-3 w-80">
+    <main className="flex min-h-screen flex-col items-center justify-center">
+      <div className="bg-yellow-50 p-6 rounded-2xl shadow-lg flex flex-col gap-3 w-80">
         <h1 className="text-2xl font-bold text-center">Holiday Trip Portal</h1>
         <input
           type="email"
