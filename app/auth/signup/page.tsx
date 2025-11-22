@@ -29,12 +29,13 @@ export default function SignupPage({ searchParams }: { searchParams: any }) {
       {searchParams.error && (
         <p style={{ color: "red" }}>{searchParams.error}</p>
       )}
-      <p className="text-lg">Please log in to access your dashboard and plan your next trip!</p>
+      <p className="text-lg">Please sign up to participate in the drawing of the next Surprise Trip</p>
       <div className="mt-4 justify-center flex gap-4">
-      <form action={signUpNewUser}>
-        <input name="email" type="email" placeholder="E-mail" required className="border p-2 rounded-full"/>
-        <input name="password" type="password" placeholder="Password" required className="border-2 border-white p-2 rounded-full"/>
-        <button type="submit" className="px-4 py-2 min-w-24 bg-red-600 border-2 text-white font-medium rounded-full hover:bg-red-500">Sign Up</button>
+      <form action={signUpNewUser} className="flex flex-col">
+        <input name="mail" type="text" placeholder="First Name" required/>
+        <input name="email" type="email" placeholder="E-mail" required/>
+        <input name="password" type="password" placeholder="Password" required/>
+        <button type="submit" className="bg-red-600 border-2 hover:bg-red-500">Sign Up</button>
       </form>
       </div>
     </main>
