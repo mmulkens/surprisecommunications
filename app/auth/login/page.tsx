@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
 
-export default function LoginPage({ searchParams }: { searchParams: any }) {
+export default function LoginPage() {
   async function signInWithEmail(formData: FormData) {
     "use server";
 
@@ -17,7 +17,7 @@ export default function LoginPage({ searchParams }: { searchParams: any }) {
     });
 
     if (error) {
-      redirect(`/signup?error=${encodeURIComponent(error.message)}`);
+      throw new Error(error.message);
     }
 
     redirect("/dashboard");
@@ -26,9 +26,6 @@ export default function LoginPage({ searchParams }: { searchParams: any }) {
   return (
     <main>
       <h1>Log in to Access your Personal Dashboard</h1>
-      {searchParams.error && (
-        <p style={{ color: "red" }}>{searchParams.error}</p>
-      )}
       <form action={signInWithEmail} className="flex flex-col">
         <input name="email" type="email" placeholder="Email" required />
         <input name="password" type="password" placeholder="Password" required />

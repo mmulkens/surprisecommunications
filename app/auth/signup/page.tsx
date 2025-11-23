@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
 
-export default function SignupPage({ searchParams }: { searchParams: any }) {
+export default function SignupPage() {
   async function signUpNewUser(formData: FormData) {
   "use server";
 
@@ -11,14 +11,14 @@ export default function SignupPage({ searchParams }: { searchParams: any }) {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
 
-  const { error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email,
     password,
   });
 
-  if (error) { 
-    redirect(`/signup?error=${encodeURIComponent(error.message)}`);
-   };
+  if (error) {
+    throw new Error(error.message);
+  }
 
   redirect("/dashboard");
 }
@@ -27,9 +27,6 @@ export default function SignupPage({ searchParams }: { searchParams: any }) {
   return (
     <main>
       <h1 className="text-4xl font-bold mb-4">If you're new, please sign up</h1>
-      {searchParams.error && (
-        <p style={{ color: "red" }}>{searchParams.error}</p>
-      )}
       <p className="text-lg max-w-1/2">Register your name and e-mail to participate in the upcoming drawing of the next Surprise Trip</p>
       <div className="mt-4 justify-center flex gap-4">
       <form action={signUpNewUser} className="flex flex-col">
