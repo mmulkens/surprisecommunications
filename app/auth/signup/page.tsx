@@ -13,13 +13,20 @@ export default function SignupPage() {
   // User info fields
   const firstName = formData.get("fname") as string;
   const lastName = formData.get("lname") as string;
-  const nickname = formData.get("nname") as string | null;
+  const nickname = formData.get("nname")?.toString() || null;
+
 
   // Sign up the user
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
+    options: {
+      data: { firstName, lastName, nickname }
+  }
   });
+
+  console.log("SignUp data:", data);
+  console.log("SignUp error:", error);
 
   if (error) {
     throw new Error(error.message);
@@ -27,7 +34,8 @@ export default function SignupPage() {
 
   // If sign up is successful, upsert user info into api.users table
   const { error: upsertError } = await supabase
-    .from("api.users")
+    .schema('api')
+    .from("users")
     .upsert(
       {
         email: email,
