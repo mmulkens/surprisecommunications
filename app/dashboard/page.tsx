@@ -13,16 +13,16 @@ export default async function DashboardPage() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center">
+    <main>
       {user ? (
         <>
-          <div className="bg-yellow-50 p-6 rounded-2xl shadow-lg flex-col gap-3">
-          <h1 className="text-2xl font-bold mb-4">Welcome, {user.email}</h1>
+          <h1>Welcome, {user.email}</h1>
           <p>Your role for the next trip will appear here.</p>
-          <form action="/auth/logout" method="post" className="mt-6 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
-          <button type="submit">Log out</button>
+          <form action="/auth/logout" method="post">
+            <div className="flex justify-between mt-2">
+              <button type="submit" className="pt-4 bg-red-500 hover:bg-red-600">Log out</button>
+            </div>
           </form>
-          </div>
         </>
       ) : (
         <p>Loading...</p>
