@@ -10,7 +10,12 @@ export default function SignupPage() {
 
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
+  // User info fields
+  const firstName = formData.get("fname") as string;
+  const lastName = formData.get("lname") as string;
+  const nickname = formData.get("nname") as string | null;
 
+  // Sign up the user
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
@@ -19,6 +24,20 @@ export default function SignupPage() {
   if (error) {
     throw new Error(error.message);
   }
+
+  // If sign up is successful, upsert user info into api.users table
+  const { error: upsertError } = await supabase
+    .from("api.users")
+    .upsert(
+      {
+        voornaam: firstName,
+        achternaam: lastName,
+        nickname: nickname,
+        email: email,
+        auth_userid: data.user?.id,
+      },
+      { onConflict: "email" }
+    );
 
   redirect("/dashboard");
 }
@@ -30,9 +49,11 @@ export default function SignupPage() {
       <p className="text-center">Register your name and e-mail to participate in the upcoming drawing of the next Surprise Trip</p>
       <div className="mt-4 justify-center flex gap-4">
       <form action={signUpNewUser} className="flex flex-col">
-        <input name="mail" type="text" placeholder="First Name" required/>
+        <input name="fname" type="text" placeholder="First Name" required/>
+        <input name="lname" type="text" placeholder="Last Name" required/>
         <input name="email" type="email" placeholder="E-mail" required/>
         <input name="password" type="password" placeholder="Password" required/>
+        <input name="nname" type="text" placeholder="Nickname (optional)"/>
         <div className="flex justify-between mt-2">
           <button type="submit" className="bg-red-600 hover:bg-red-500">Sign Up</button>
           <Link href="/auth/welcome">
