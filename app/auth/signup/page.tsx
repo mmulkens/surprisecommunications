@@ -30,14 +30,18 @@ export default function SignupPage() {
     .from("api.users")
     .upsert(
       {
+        email: email,
         voornaam: firstName,
         achternaam: lastName,
         nickname: nickname,
-        email: email,
         auth_userid: data.user?.id,
       },
       { onConflict: "email" }
     );
+
+   if (upsertError) {
+    throw new Error (upsertError.message);
+  }
 
   redirect("/dashboard");
 }
