@@ -32,25 +32,6 @@ export default function SignupPage() {
     throw new Error(error.message);
   }
 
-  // If sign up is successful, upsert user info into api.users table
-  const { error: upsertError } = await supabase
-    .schema('api')
-    .from("users")
-    .upsert(
-      {
-        email: email,
-        voornaam: firstName,
-        achternaam: lastName,
-        nickname: nickname,
-        auth_userid: data.user?.id,
-      },
-      { onConflict: "email" }
-    );
-
-   if (upsertError) {
-    throw new Error (upsertError.message);
-  }
-
   redirect("/dashboard");
 }
 
