@@ -17,7 +17,6 @@ export default async function userDataFetch() {
     .schema('api')
     .from("users")
     .select("voornaam, nickname")
-  //  .eq("auth_userid", user.id)
     .single();
 
   if (error) {

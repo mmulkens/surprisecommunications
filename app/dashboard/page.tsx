@@ -1,18 +1,23 @@
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import userDataFetch from "./getUser";
+import userChanceFetch from "./getChance";
+
 
 
 export default async function DashboardPage() {
   const { user, nameToShow } = await userDataFetch();
+  const { drawChance } = await userChanceFetch(); 
   return (
     <main>
       {user ? (
         <>
           <h1>Welcome, {nameToShow}</h1>
           <p>Your role for the next trip will appear here.</p>
+          <p>The chance you'll be the next organizer is</p>
+          <p className="text-8xl text-orange-400 font-bold">{drawChance}%</p>
           <form action="/auth/logout" method="post">
-            <div className="flex justify-between mt-2">
+            <div className="flex justify-between mt-8">
               <button type="submit" className="pt-4 bg-red-500 hover:bg-red-600">Log out</button>
             </div>
           </form>
