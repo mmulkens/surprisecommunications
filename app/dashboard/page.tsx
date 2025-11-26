@@ -1,22 +1,15 @@
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
+import userDataFetch from "./getUser";
+
 
 export default async function DashboardPage() {
-  const supabase = await createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    redirect("/login");
-  }
-
+  const { user, nameToShow } = await userDataFetch();
   return (
     <main>
       {user ? (
         <>
-          <h1>Welcome, {user.email}</h1>
+          <h1>Welcome, {nameToShow}</h1>
           <p>Your role for the next trip will appear here.</p>
           <form action="/auth/logout" method="post">
             <div className="flex justify-between mt-2">

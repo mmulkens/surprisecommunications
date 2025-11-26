@@ -1,28 +1,23 @@
-import { redirect } from "next/navigation";
-import { createClient } from "@/utils/supabase/server";
+'use client'
 import Link from "next/link";
+import signInWithEmail from "./logInInput";
+import { useFormStatus } from "react-dom";
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <button
+      type="submit"
+      disabled={pending}
+      className={`bg-red-600 hover:bg-red-500 w-36 ${ pending && "opacity-50" }`}
+    >
+      {pending ? "Logging in..." : "Log in"}
+    </button>
+  );
+}
 
 export default function LoginPage() {
-  async function signInWithEmail(formData: FormData) {
-    "use server";
-
-    const supabase = await createClient();
-
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    if (error) {
-      throw new Error(error.message);
-    }
-
-    redirect("/dashboard");
-  }
-
   return (
     <main>
       <h1>Log in to Access your Personal Dashboard</h1>
@@ -30,10 +25,10 @@ export default function LoginPage() {
         <input name="email" type="email" placeholder="Email" required />
         <input name="password" type="password" placeholder="Password" required />
         <div className="flex justify-between mt-2">
-          <button type="submit" className="bg-red-600 hover:bg-red-500">Log in</button>
           <Link href="/auth/welcome">
             <button type="button" className="bg-gray-400 hover:bg-gray-500">Back</button>
           </Link>
+          <SubmitButton />
         </div>
       </form>
     </main>
