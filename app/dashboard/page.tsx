@@ -12,12 +12,13 @@ export default async function DashboardPage() {
     <main>
       {user ? (
         <>
+          <p className="text-8xl mb-6">🪂</p>
           <h1>Welcome, {nameToShow}</h1>
           <p>Your role for the next trip will appear here.</p>
           <p>The chance you'll be the next organizer is</p>
           <p className="text-8xl text-orange-400 font-bold">{drawChance}%</p>
           <form action="/auth/logout" method="post">
-            <div className="flex justify-between mt-8">
+            <div className="flex justify-between mt-6">
               <button type="submit" className="pt-4 bg-red-500 hover:bg-red-600">Log out</button>
             </div>
           </form>
