@@ -3,7 +3,7 @@
 
 body {
   background-image: linear-gradient(55deg, #CB1B44, #D42246, #E7430D, #ff7600, orange);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', Arial-narrow, sans-serif;
 }
 
 main {
@@ -19,11 +19,10 @@ main {
 
 h1 {
   @apply 
-    text-4xl 
+    text-3xl 
     font-bold
     text-center
-    mb-4
-    max-w-4/5;
+    mb-4;
     font-family: 'Monoton'; 
     font-weight: normal;
 }
@@ -35,7 +34,15 @@ h3 {
     mb-4
     max-w-4/5;
   font-family:  'Source Code Pro', monospace;
-  font-weight: 300
+  font-weight: 300;
+}
+
+p {
+  @apply 
+    text-center
+    my-2;
+  font-family:  'Source Code Pro', monospace;
+  font-weight: 200;
 }
 
 button {
