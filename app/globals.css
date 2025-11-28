@@ -7,10 +7,10 @@ body {
 
 main {
   @apply 
-    flex 
+    flex
     flex-col 
     items-center 
-    justify-center 
+    justify-center-safe
     p-4;
   height: 100dvh;
 }
