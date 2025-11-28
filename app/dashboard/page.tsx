@@ -5,7 +5,7 @@ import  userChanceFetch from "./getChance";
 import  userChancesFetch from "./getChances";
 
 export default async function DashboardPage() {
-  const { user, nameToShow } = await userDataFetch();
+  const { user, profile, nameToShow } = await userDataFetch();
   const { drawChance } = await userChanceFetch(); 
   const drawChances = await userChancesFetch();
   console.log("drawChances:", drawChances);
@@ -17,17 +17,17 @@ export default async function DashboardPage() {
           <h1>Welcome, {nameToShow}</h1>
           <p>Your role for the next trip will appear here.</p>
           <p>The chance you'll be the next organizer is</p>
-          <p className="text-7xl bg-white/30 w-64 rounded-lg pt-3 pb-4 px-6 text-center text-white font-bold my-6">{drawChance}%</p>
+          <p className="text-7xl bg-white/30 w-72 rounded-lg pt-3 pb-4 px-6 text-center text-white font-bold my-6">{drawChance}%</p>
           
           <p className="text-8xl">🪂</p>
-          <div className="mt-6 w-64 bg-white/30 p-4 rounded-lg">
+          <div className="mt-6 w-72 bg-white/30 p-4 rounded-lg">
             {drawChances.map((item, index) => (
               <div className="flex text-sm mt-1.5 mb-1.5">
                 <span key="item.user_id" className="w-14 pr-2 text-xs text-white text-right">{item.users.voornaam}</span>
-                <div className="h-4 flex-full flex w-40 rounded-full bg-white text-yellow-800">
+                <div className="h-4 flex-full flex w-48 rounded-full bg-white text-red-900">
                   <div 
-                    className="bg-yellow-400 h-4 pr-px rounded-l-full text-xs text-right" 
-                    style={{ width: `${12 + 6*item.kans_d}%`}}>
+                    style={{ width: `${12 + 6*item.kans_d}%` }}
+                    className={`${item.user_id == profile?.id ? 'bg-red-500 text-white' : 'bg-red-200'} hover:bg-red-400 hover:text-white h-4 pr-px rounded-l-full text-xs text-right`}>
                       {item.kans_d}
                   </div>
                   <div className="h-4 ml-px text-xs">%</div>
@@ -36,6 +36,8 @@ export default async function DashboardPage() {
               </div>
             ))}
           </div>
+
+          
           
           <form action="/auth/logout" method="post">
             <div className="flex justify-between mt-6">
@@ -49,3 +51,5 @@ export default async function DashboardPage() {
     </main>
   )
 }
+
+//, backgroundColor: `${item.user_id == profile?.id ? "red" : "pink"}`
