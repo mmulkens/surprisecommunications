@@ -23,7 +23,7 @@ export default async function DashboardPage() {
           <div className="mt-6 w-64 bg-white/30 p-4 rounded-lg">
             {drawChances.map((item, index) => (
               <div className="flex text-sm mt-1.5 mb-1.5">
-                <span className="w-14 pr-2 text-xs text-white text-right">{item.users.voornaam}</span>
+                <span key="item.user_id" className="w-14 pr-2 text-xs text-white text-right">{item.users.voornaam}</span>
                 <div className="h-4 flex-full flex w-40 rounded-full bg-white text-yellow-800">
                   <div 
                     className="bg-yellow-400 h-4 pr-px rounded-l-full text-xs text-right" 
