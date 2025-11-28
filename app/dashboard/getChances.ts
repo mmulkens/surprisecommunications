@@ -10,10 +10,18 @@ export default async function userChancesFetch() {
   const { data, error } = await supabase
     .schema("api")
     .from("kansen")
-    .select("kans_d")
+    .select(`
+			user_id,
+			kans_d,
+			users(
+				code,
+				voornaam)
+		`)
 	.eq("trip_id", 5)
-	.neq("user_id", profile?.id);
-  
+	//.neq("user_id", profile?.id)
+	;
+
+
   if (error) {
     console.error(error);
     return [];

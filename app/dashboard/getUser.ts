@@ -16,6 +16,7 @@ export default async function userDataFetch() {
 		.schema('api')
 		.from("users")
 		.select("id, code, voornaam, nickname")
+		.eq("auth_userid", user.id) // Link profile to auth user ID !!
 		.single();
 
 	if (error) {
@@ -25,4 +26,4 @@ export default async function userDataFetch() {
 	const nameToShow = profile?.nickname || profile?.voornaam || user.email;
 	return { user, supabase, nameToShow, profile };
 
-}
+} 
