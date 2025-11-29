@@ -45,7 +45,7 @@ export default async function DashboardPage() {
 								<div className="h-4 flex-full flex w-48 rounded-full bg-red-100 text-red-900">
 									<div 
 										style={{ width: `${12 + 6*item.kans_d}%` }}
-										className={`${item.user_id == profile?.id ? 'bg-red-500 text-white' : 'bg-red-200'} hover:bg-red-400 hover:text-white h-4 pr-px rounded-l-full text-xs text-right`}>
+										className={`${item.user_id == profile?.id ? 'bg-red-500 text-white' : 'bg-red-200'} hover:bg-red-400 active:bg-red-400 hover:text-white h-4 pr-px rounded-l-full text-xs text-right`}>
 											{item.kans_d}
 									</div>
 									<div className="h-4 ml-px text-xs">%</div>
