@@ -20,7 +20,8 @@ function SubmitButton() {
 export default function LoginPage() {
   return (
     <main>
-      <h1>Log in to Access your Personal Dashboard</h1>
+      <img src="/icons/rocket.png" className="icon-ph"/>
+      <h1>Log in</h1>
       <form action={signInWithEmail} className="flex flex-col">
         <input name="email" type="email" placeholder="Email" required />
         <input name="password" type="password" placeholder="Password" required />

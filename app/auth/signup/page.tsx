@@ -24,8 +24,9 @@ export default function signUpPage() {
   }
   return (
     <main>
-      <h1>If you're new, please sign up</h1>
-      <p className="text-center">Register your name and e-mail to participate in the upcoming drawing of the next Surprise Trip</p>
+      <img src="/icons/manSettingFlag.svg" className="icon-ph"/>
+      <h1>Sign up</h1>
+      <p className="text-center">Register your name and e-mail to access your role on the upcoming Surprise Trip</p>
       <div className="mt-4 justify-center flex gap-4">
       <form action={signUpNewUser} className="flex flex-col">
         <input name="fname" type="text" placeholder="First Name" required/>
