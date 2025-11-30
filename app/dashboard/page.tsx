@@ -2,11 +2,16 @@ import userDataFetch from "./getUser";
 import userChanceFetch from "./getChance";
 import userChancesFetch from "./getChances";
 import ToggleRole from "./toggleRole";
+import userRoleFetch from "./getRole";
 
 export default async function DashboardPage() {
 	const { user, profile, nameToShow } = await userDataFetch();
 	const { drawChance } = await userChanceFetch(); 
 	const drawChances = await userChancesFetch();
+	const userRole = await userRoleFetch();
+
+	console.log("User Role:", userRole);
+	console.log("User id:", profile?.id);
 
 	return (
 		<main>
@@ -23,7 +28,7 @@ export default async function DashboardPage() {
 					<p>The <b>chance</b> you had in the drawing for the upcoming edition's organizers is:</p>
 					<div className="text-7xl my-3 text-center text-red-200 font-medium">{drawChance}%</div>
 					
-					<img src="/icons/surfboard.svg" className="icon-ph"/>
+					<img src="/icons/parachute.png" className="icon-ph"/>
 					<p>In relation to the <b>other participants</b>, your odds look as follows. Change the trip edition to see historical data</p>
 						
 
@@ -56,10 +61,12 @@ export default async function DashboardPage() {
 					
 
 					<img src="/icons/dice.png" className="icon-ph flex"/>
-					<p>Your role for the next trip will appear here.</p>
+					<p>Below you can discover <b>your mission</b> for the next edition. If you are an organizer, the name of your co-organizer will appear. If not, the traveler role will be shown.</p>
 					
 					<ToggleRole>
-						Traveler
+						{userRole.map(o => (
+							<div key={o.coorganizer_id}>{o.coorg.voornaam}</div>
+						))}
 					</ToggleRole>
 
 					<form action="/auth/logout" method="post">
