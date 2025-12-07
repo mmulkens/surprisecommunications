@@ -1,7 +1,7 @@
 import userDataFetch from "./getUser";
 import userChanceFetch from "./getChance";
 import userChancesFetch from "./getChances";
-import YearFilter from "./barChart";
+import BarChart from "./barChart";
 import ToggleRole from "./toggleRole";
 import userRoleFetch from "./getRole";
 
@@ -24,6 +24,8 @@ export default async function DashboardPage() {
 		<main>
 			{user ? (
 				<>
+				{/* // Section 1: Welcome */}
+
 					<img src="/icons/planet.svg" className="icon-ph flex"/>
 					<h1>Welcome, {nameToShow}</h1>
 					<p>This is your personal <b>Surprise Dashboard</b>.
@@ -31,31 +33,53 @@ export default async function DashboardPage() {
 						You are currently logged in as <b>{user.email}</b> so secret information here is only accessible to you.
 					</p>
 
+				{/* // Section 2: User drawing chance */}
+
 					<img src="/icons/manSettingFlag.svg" className="icon-ph"/>
 					<p>The <b>chance</b> you had in the drawing for the upcoming edition's organizers is:</p>
 					<div className="text-7xl my-3 text-center text-red-200 font-medium">{drawChance}%</div>
 					
+				{/* // Section 3: Barchart with all participants' chances */}
+
 					<img src="/icons/parachute.png" className="icon-ph"/>
 					<p>In relation to the <b>other participants</b>, your odds look as follows. Change the trip edition to see historical data</p>
 						
-					<div>
-					<YearFilter
+					<BarChart
 						profileId={profile?.id}
 						initialYear={defaultYear}
 						initialResults={initialResults}
 					/>
-					</div>
 					
+				{/* // Section 4: Participant role */}
 
 					<img src="/icons/dice.png" className="icon-ph flex"/>
 					<p>Below you can discover <b>your mission</b> for the next edition. If you are an organizer, the name of your co-organizer will appear. If not, the traveler role will be shown.</p>
 					
-					<ToggleRole>
-						{userRole.map(o => (
-							<div key={o.coorganizer_id}>{o.coorg.voornaam}</div>
-						))}
+					<ToggleRole revealBelow={<div>{userRole[0].coorg.voornaam}</div>}>	
+
+				{/* // Section 5: Organizer information */}
+
+						{userRole[0].user_id == profile?.id ? (
+							<>
+								<img src="/icons/lock.png" className="icon-ph flex"/>
+								<div className="text-lg text-white w-72 mt-4 min-h-10 font-bold p-1 bg-emerald-500 border-2 border-white rounded-xl content-center text-center">
+									auth_user: {userRole[0].user_id}, 
+									org_users: {userRole[0].user_id} & {userRole[0].coorganizer_id}
+								</div>
+								<div className="mt-4 p-4 w-72 bg-blue-500 border-2 border-white rounded-xl text-white">
+									Nen hele bazaaar me info voor die boyz!
+								</div>
+							</>
+							) : (
+								null
+							) 
+						}
 					</ToggleRole>
 
+					
+
+				{/* // Section 6: Log out	 */}
+				
 					<form action="/auth/logout" method="post">
 						<div className="flex justify-between my-10">
 							<button type="submit" className="bg-red-500 hover:bg-red-600">Log out</button>

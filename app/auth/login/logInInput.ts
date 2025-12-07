@@ -4,7 +4,7 @@ import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
 
 export default async function signInWithEmail(formData: FormData) {
-		await new Promise(f => setTimeout(f, 100));
+		
 		const supabase = await createClient();
 
 		const email = formData.get("email") as string;

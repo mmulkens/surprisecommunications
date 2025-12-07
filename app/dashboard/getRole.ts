@@ -1,16 +1,16 @@
 import userDataFetch from "./getUser";	
 
 type RoleRow = {
-	trip_id: number;
-	user_id: number;
-	coorganizer_id: number;
-	trip: { volgende: boolean };
+	trip_id: number,
+	user_id: number,
+	coorganizer_id: number,
+	trip: { volgende: boolean },
 	user: { 
 		voornaam: string,
-	};
+	},
 	coorg: { 
 		voornaam: string
-	};
+	}
 };
 
 export default async function userRoleFetch(): Promise<RoleRow[]> {
