@@ -4,6 +4,8 @@ import userChancesFetch from "./getChances";
 import BarChart from "./barChart";
 import ToggleRole from "./toggleRole";
 import userRoleFetch from "./getRole";
+import tripsFetch from "./getTrips";
+import PastTrips from "./pastTrips";
 
 export default async function DashboardPage() {
 	// Get userdata: supabase user object, profile with user id and nickname/name
@@ -13,12 +15,15 @@ export default async function DashboardPage() {
 	// Set the default year (hardcoded, should be active trip year)
 	const defaultYear = 2026;
 	// Get initial barchart state (for current year)
-	const initialResults = await userChancesFetch(defaultYear);
+	const initialBarChart = await userChancesFetch(defaultYear);
 	// Get the role for the upcoming trip
 	const userRole = await userRoleFetch();
+	// Get initial trip history state (for current year)
+	const initialTripHistory = await tripsFetch(defaultYear);
 
 	console.log("User Role:", userRole);
 	console.log("User id:", profile);
+	console.log("Trip:", initialTripHistory);
 
 	return (
 		<main>
@@ -36,18 +41,18 @@ export default async function DashboardPage() {
 				{/* // Section 2: User drawing chance */}
 
 					<img src="/icons/manSettingFlag.svg" className="icon-ph"/>
-					<p>The <b>chance</b> you had in the drawing for the upcoming edition's organizers is:</p>
+					<p>The <b>chance</b> you had in the drawing for picking the organizers for the upcoming edition is:</p>
 					<div className="text-7xl my-3 text-center text-red-200 font-medium">{drawChance}%</div>
 					
-				{/* // Section 3: Barchart with all participants' chances */}
+				{/* // Section 3: Barchart with all participants' chances and historic chances*/}
 
 					<img src="/icons/parachute.png" className="icon-ph"/>
-					<p>In relation to the <b>other participants</b>, your odds look as follows. Change the trip edition to see historical data</p>
+					<p>In relation to the <b>other participants</b>, your odds looked as follows. Change the trip edition to see historical data</p>
 						
 					<BarChart
 						profileId={profile?.id}
 						initialYear={defaultYear}
-						initialResults={initialResults}
+						initialResults={initialBarChart}
 					/>
 					
 				{/* // Section 4: Participant role */}
@@ -76,9 +81,17 @@ export default async function DashboardPage() {
 						}
 					</ToggleRole>
 
-					
+				{/* // Section 6: Organizer history */}
 
-				{/* // Section 6: Log out	 */}
+					<img src="/icons/rocket.png" className="icon-ph flex"/>
+					<p>Feeling nostalgic? Below you find the <b>history of past trips</b> made since 2019.</p>
+
+					<PastTrips
+						initialYear={defaultYear}
+						initialResults={initialTripHistory}
+					/>
+
+				{/* // Section 7: Log out	 */}
 				
 					<form action="/auth/logout" method="post">
 						<div className="flex justify-between my-10">
