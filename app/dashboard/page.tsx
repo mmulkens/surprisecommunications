@@ -1,17 +1,24 @@
 import userDataFetch from "./getUser";
 import userChanceFetch from "./getChance";
 import userChancesFetch from "./getChances";
+import YearFilter from "./barChart";
 import ToggleRole from "./toggleRole";
 import userRoleFetch from "./getRole";
 
 export default async function DashboardPage() {
+	// Get userdata: supabase user object, profile with user id and nickname/name
 	const { user, profile, nameToShow } = await userDataFetch();
-	const { drawChance } = await userChanceFetch(); 
-	const drawChances = await userChancesFetch();
+	// Get this year's drawing chance for the current user
+	const { drawChance } = await userChanceFetch();
+	// Set the default year (hardcoded, should be active trip year)
+	const defaultYear = 2026;
+	// Get initial barchart state (for current year)
+	const initialResults = await userChancesFetch(defaultYear);
+	// Get the role for the upcoming trip
 	const userRole = await userRoleFetch();
 
 	console.log("User Role:", userRole);
-	console.log("User id:", profile?.id);
+	console.log("User id:", profile);
 
 	return (
 		<main>
@@ -31,32 +38,12 @@ export default async function DashboardPage() {
 					<img src="/icons/parachute.png" className="icon-ph"/>
 					<p>In relation to the <b>other participants</b>, your odds look as follows. Change the trip edition to see historical data</p>
 						
-
-					<div className="w-72 my-6 bg-white/30 p-4 rounded-2xl">
-
-						<form className="text-white text-center text-sm font-bold mb-5">
-							<select name="edition" className="p-1 rounded-lg bg-white/30 text-red-100 font-medium">
-								<option value="2026" selected>2026</option>
-								<option value="2025">2025</option>
-								<option value="2024">2024</option>
-								<option value="2023">2023</option>
-								<option value="2022">2022</option>
-							</select>
-						</form>
-
-						{drawChances.map((item, index) => (
-							<div className="flex text-sm mt-2 mb-1.5">
-								<span key="item.user_id" className="w-14 pr-2 text-xs text-white text-right">{item.users.voornaam}</span>
-								<div className="h-4 flex-full flex w-48 rounded-full bg-red-100 text-red-900">
-									<div 
-										style={{ width: `${12 + 6*item.kans_d}%` }}
-										className={`${item.user_id == profile?.id ? 'bg-red-500 text-white' : 'bg-red-200'} hover:bg-red-400 active:bg-red-400 hover:text-white h-4 pr-px rounded-l-full text-xs text-right`}>
-											{item.kans_d}
-									</div>
-									<div className="h-4 ml-px text-xs">%</div>
-								</div>
-							</div>
-						))}
+					<div>
+					<YearFilter
+						profileId={profile?.id}
+						initialYear={defaultYear}
+						initialResults={initialResults}
+					/>
 					</div>
 					
 

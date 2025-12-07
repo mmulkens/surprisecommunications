@@ -1,7 +1,6 @@
-import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
-import { QueryResult, QueryData, QueryError } from '@supabase/supabase-js'
-import userDataFetch from "./getUser";	
+"use server"
+
+import userDataFetch from "./getUser";
 
 type ChanceRow = {
   user_id: number;
@@ -12,7 +11,7 @@ type ChanceRow = {
   };
 };
 
-export default async function userChancesFetch(): Promise<ChanceRow[]> {
+export default async function userChancesFetch(year: number): Promise<ChanceRow[]> {
   const { supabase } = await userDataFetch();
 
   const { data, error } = await supabase
@@ -24,9 +23,13 @@ export default async function userChancesFetch(): Promise<ChanceRow[]> {
       users:users!kansen_user_id_fkey (
         code,
         voornaam
-      )
+      ),
+			trip:trips!inner (
+				jaar
+		)
     `)
-    .eq("trip_id", 5);
+    .filter("trip.jaar", 'eq', year)
+    .order("user_id");
 
   if (error) {
     console.error(error);
