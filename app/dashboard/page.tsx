@@ -19,7 +19,7 @@ export default async function DashboardPage() {
 	// Get the role for the upcoming trip
 	const userRole = await userRoleFetch();
 	// Get initial trip history state (for current year)
-	const initialTripHistory = await tripsFetch(defaultYear);
+	const initialTripHistory = await tripsFetch(defaultYear-1);
 
 	console.log("User Role:", userRole);
 	console.log("User id:", profile);
@@ -54,6 +54,11 @@ export default async function DashboardPage() {
 						initialYear={defaultYear}
 						initialResults={initialBarChart}
 					/>
+
+				{/* // Section 2: User drawing chance */}
+
+					<img src="/icons/abacus.png" className="icon-ph"/>
+					<p>The math behind the draw changes</p>
 					
 				{/* // Section 4: Participant role */}
 

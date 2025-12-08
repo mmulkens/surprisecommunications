@@ -5,7 +5,7 @@ import tripsFetch from "./getTrips";
 
 export default function PastTrips( { initialYear, initialResults} ) {
 
-  const years = [2026, 2025, 2024, 2022, 2019]
+  const years = [2025, 2024, 2022, 2019]
  
   const [selectedYear, setSelectedYear] = useState(initialYear)
   const [results, setResults] = useState(initialResults)
@@ -37,10 +37,25 @@ export default function PastTrips( { initialYear, initialResults} ) {
         <div >
           {results.map((item) => (
             <div key={item.id} className="flex-1 text-sm mt-2 mb-1.5">
-              <div className="text-white font-bold mb-1">Bestemming:</div>
+              <div className="text-white font-bold mb-1">Destination:</div>
               <div className="mb-2">{item.bestemming}, {item.land}</div>
-              <span className="text-white font-bold mb-1">Datum:</span>
-              <div>{item.vertrekdatum}</div>
+              <div className="text-white font-bold mb-1">Departure date:</div>
+              <div className="mb-2">{item.vertrekdatum}</div>
+              <div className="text-white font-bold mb-1">Organizers:</div>
+              <div className="my-2 flex justify-between px-8">
+                <div className="flex-col">
+                  <div className="w-22 h-22 mt-2 rounded-full bg-[url(/faz/Matthias.jpg)] bg-cover">
+                    <div className="bg-white/10 border-2 border-white w-22 h-22 rounded-full"></div>
+                  </div>
+                  <div className="mt-1 text-white font-bold">Nizer</div>
+                </div>
+                <div className="flex-col">
+                  <div className="w-22 h-22 mt-2 rounded-full bg-[url(/faz/Glenn.jpg)] bg-cover">
+                    <div className="bg-white/20 border-2 border-white w-22 h-22 rounded-full"></div>
+                  </div>
+                  <div className="mt-1 text-white font-bold">Danny G</div>
+                </div>
+              </div>
             </div>
 			    ))}
         </div>

@@ -17,7 +17,7 @@ export default async function Page() {
         initialResults={initialResults}
       />
       <div className="bg-white w-120 h-120 text-[300px] text-center content-center">
-        🔐
+        🧮
       </div>
     </div>
 		
