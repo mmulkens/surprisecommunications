@@ -125,13 +125,24 @@ export default async function DashboardPage() {
 						{userRole[0].user_id == profile?.id ? (
 							<>
 								<img src="/icons/lock.png" className="icon-ph flex"/>
-								<div className="text-lg text-white w-72 mt-4 min-h-10 font-bold p-1 bg-emerald-500 border-2 border-white rounded-xl content-center text-center">
+								{/* <div className="text-lg text-white w-72 mt-4 min-h-10 font-bold p-1 bg-emerald-500 border-2 border-white rounded-xl content-center text-center">
 									auth_user: {userRole[0].user_id}, 
 									org_users: {userRole[0].user_id} & {userRole[0].coorganizer_id}
+								</div> */}
+								<p>Dear {userRole[0].user.voornaam}, you have been selected to organize the <b>{defaultYear} edition of the Surprise Trip </b> 
+									together with <b>{userRole[0].coorg.voornaam}</b>. Congratulations!
+								</p>
+								<p>To be successful at it, secret communication is key. Therefore access to the <b>surprise mailbox</b> is now being transferred to you.</p>
+								<p>The previous organizers have cleaned up their browser cache and password for the account, so a password reset is not strictly necessary.
+									Should you decide to alter it, make sure to <b>securely store</b> the new password for handover to the organizers of the {defaultYear+1} edition. 
+									Two-factor authentication is disabled for the account.
+								</p>
+								<div className="w-72 my-6 bg-white/30 p-4 rounded-2xl text-red-100 justify-items-center text-center">
+									<div className="text-[15px]">surprisecommunications@proton.me</div>
+									<div className="text-xl font-mono">DOqMCPqiw6n0jJi</div>
 								</div>
-								<div className="mt-4 p-4 w-72 bg-blue-500 border-2 border-white rounded-xl text-white">
-									Nen hele bazaaar me info voor die boyz!
-								</div>
+								<p>The dates for this edition have already been set, so the next steps are getting hands on with the practicalities of the organization.</p>
+								<p>Good luck!</p>
 							</>
 							) : (
 								null
