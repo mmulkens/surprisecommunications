@@ -62,7 +62,8 @@
 			max-w-80
 			text-base
 			text-center
-			my-1.5;
+			my-1.5
+			hyphens-auto;
 		line-height: 1.5;
 	}
 

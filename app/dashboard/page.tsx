@@ -1,5 +1,6 @@
 import userDataFetch from "./getUser";
 import userChanceFetch from "./getChance";
+import userPenaltyFetch from "./getPenalty";
 import userChancesFetch from "./getChances";
 import BarChart from "./barChart";
 import ToggleRole from "./toggleRole";
@@ -8,12 +9,16 @@ import tripsFetch from "./getTrips";
 import PastTrips from "./pastTrips";
 
 export default async function DashboardPage() {
+	// Set the default year (hardcoded, should be active trip year)
+	const defaultYear = 2026;
 	// Get userdata: supabase user object, profile with user id and nickname/name
 	const { user, profile, nameToShow } = await userDataFetch();
 	// Get this year's drawing chance for the current user
-	const { drawChance } = await userChanceFetch();
-	// Set the default year (hardcoded, should be active trip year)
-	const defaultYear = 2026;
+	const { drawChance } = await userChanceFetch(defaultYear);
+	// Get penalty data
+	const penalty = await userPenaltyFetch(defaultYear)
+	const checkPenalty = (penRecency: number) => penalty.some( ({recency}) => recency == penRecency);
+	const sumPenalty = Math.round(100 * penalty.reduce((sum, current) => sum + current.penalty, 0)) /100;
 	// Get initial barchart state (for current year)
 	const initialBarChart = await userChancesFetch(defaultYear);
 	// Get the role for the upcoming trip
@@ -24,6 +29,8 @@ export default async function DashboardPage() {
 	console.log("User Role:", userRole);
 	console.log("User id:", profile);
 	console.log("Trip:", initialTripHistory);
+	console.log("Penalty:", penalty);
+	console.log("Recency-1:", checkPenalty(1));
 
 	return (
 		<main>
@@ -41,51 +48,61 @@ export default async function DashboardPage() {
 				{/* // Section 2: User drawing chance */}
 
 					<img src="/icons/manSettingFlag.svg" className="icon-ph"/>
-					<p>The <b>chance</b> you had in the drawing for picking the organizers for the upcoming edition is:</p>
+					<p><b>Your chance</b> of being drawn to be one of the two organizers for the upcoming edition is:</p>
 					<div className="text-7xl my-3 text-center text-red-200 font-medium">{drawChance}%</div>
 
 					
-					<img src="/icons/abacus.png" className="icon-ph"/>
-					<p>Before the drawing each of the participants gets 10 points. From those points a <b>penalty</b> is subtracted, 
-						which is based on the recency of the participant's role as organizer.
-						Penalties can be accumulated to a maximum of nine.
+					{/* <img src="/icons/abacus.png" className="icon-ph"/> */}
+					<p>This chance is derived as follows. To start, each of the participants gets <b>ten points</b>. From those points a <b>penalty</b> is subtracted, 
+						depending on how recently you have been an organizer. You get penalized up to five years ago, in an <b>exponentially</b> decreasing fashion.
+						Penalties can only be accumulated to a <b>maximum of nine points</b> to avoid being entirely eliminated from the drawing.
 					</p>
-					<div className="w-56 my-6 flex justify-between text-red-100 text-sm">
-						<div className="w-8 flex-col justify-items-center">
-							<div className="font-bold mb-2">5</div>
-							<div className="w-4 h-6 bg-red-300/80 hover:bg-red-500 active:bg-red-500"></div>
-							<div className="text-sm text-red-200 mt-1">-1<sup>.21</sup></div>
+					<div className="relative w-72 my-6 bg-white/30 px-4 rounded-2xl justify-items-center text-center">
+						<div className="absolute rounded-full translate-x-[-60px] translate-y-[130px] text-center content-center flex-col">
+							<div className="mb-3 text-sm text-red-200">Your penalty is</div>
+							<div className="text-5xl font-bold text-red-600/50">
+								{Math.round(sumPenalty)}
+								<sup>.{Math.round(-100 * (sumPenalty % 1))}</sup>
+							</div>
 						</div>
-						<div className="w-8 flex-col justify-items-center">
-							<div className="font-bold mb-2">4</div>
-							<div className="w-4 h-8 bg-red-300/80 hover:bg-red-500 active:bg-red-500"></div>
-							<div className="text-sm text-red-200 mt-1">-1<sup>.49</sup></div>
-						</div>
-						<div className="w-8 flex-col justify-items-center">
-							<div className="font-bold mb-2">3</div>
-							<div className="w-4 h-12 bg-red-300/80 hover:bg-red-500 active:bg-red-500"></div>
-							<div className="text-sm text-red-200 mt-1">-2<sup>.18</sup></div>
-						</div>
-						<div className="w-8 flex-col justify-items-center">
-							<div className="font-bold mb-2">2</div>
-							<div className="w-4 h-25 bg-red-300/80 hover:bg-red-500 active:bg-red-500"></div>
-							<div className="text-sm text-red-200 mt-1">-5<sup>.14</sup></div>
-						</div>
-						<div className="w-8 flex-col justify-items-center">
-							<div className="font-bold mb-2">1</div>
-							<div className="w-4 h-33 bg-red-300/80 hover:bg-red-500 active:bg-red-500"></div>
-							<div className="text-sm text-red-200 mt-1">-6<sup>.64</sup></div>
+						<div className="w-52 my-6 flex justify-between text-red-100 text-sm">
+						
+							<div className="w-8 flex-col justify-items-center">
+								<div className="font-bold mb-2">5</div>
+								<div className={`${checkPenalty(5) ? 'bg-red-500/70' : 'bg-red-200'} rounded-full w-4 h-6`}></div>
+								<div className="text-sm text-red-200 mt-1">-1<sup>.21</sup></div>
+							</div>
+							<div className="w-8 flex-col justify-items-center">
+								<div className="font-bold mb-2">4</div>
+								<div className={`${checkPenalty(4) ? 'bg-red-500/70' : 'bg-red-200'} rounded-full w-4 h-8`}></div>
+								<div className="text-sm text-red-200 mt-1">-1<sup>.49</sup></div>
+							</div>
+							<div className="w-8 flex-col justify-items-center">
+								<div className="font-bold mb-2">3</div>
+								<div className={`${checkPenalty(3) ? 'bg-red-500/70' : 'bg-red-200'} rounded-full w-4 h-12`}></div>
+								<div className="text-sm text-red-200 mt-1">-2<sup>.18</sup></div>
+							</div>
+							<div className="w-8 flex-col justify-items-center">
+								<div className="font-bold mb-2">2</div>
+								<div className={`${checkPenalty(2) ? 'bg-red-500/70' : 'bg-red-200'} rounded-full w-4 h-25`}></div>
+								<div className="text-sm text-red-200 mt-1">-5<sup>.14</sup></div>
+							</div>
+							<div className="w-8 flex-col justify-items-center">
+								<div className="font-bold mb-2">1</div>
+								<div className={`${checkPenalty(1) ? 'bg-red-500/70' : 'bg-red-200'} rounded-full w-4 h-33`}></div>
+								<div className="text-sm text-red-200 mt-1">-6<sup>.64</sup></div>
+							</div>
 						</div>
 					</div>
 					{/* <div className="w-56 border-b-2 mt-3 mb-6 pl-2 pb-1 border-red-300/80 border-dashed text-red-300 text-sm">-9</div> */}
-					<p>The remaining points then form the <b>weights</b> for the sampling of two organizers.
-						Each participants points divided by the total remaining points gets each participants' sampling odds.
+					<p>The points you retain form the <b>weights</b> in the sampling of two organizers.
+						Divided by the total of remaining points across all participants, they return your sampling odds.
 					</p>
 					
 				{/* // Section 3: Barchart with all participants' chances and historic chances*/}
 
 					<img src="/icons/parachute.png" className="icon-ph"/>
-					<p>In relation to the <b>other participants</b>, those odds looked as follows. Change the trip edition to see historical data</p>
+					<p>In relation to the <b>other participants</b>, those odds look as follows. Change the trip edition to see historical data.</p>
 						
 					<BarChart
 						profileId={profile?.id}

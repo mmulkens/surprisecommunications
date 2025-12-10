@@ -4,7 +4,7 @@ import { QueryResult, QueryData, QueryError } from '@supabase/supabase-js'
 import userDataFetch from "./getUser";	
 
 
-export default async function userChanceFetch() {
+export default async function userChanceFetch(year: number) {
 	// 1. Get user data and supabase client
 	const { user, supabase, nameToShow, profile } = await userDataFetch();
 
@@ -13,7 +13,7 @@ export default async function userChanceFetch() {
 		.schema("api")
 		.from("kansen")
 		.select("kans_d")
-		.eq("trip_id", 5)
+		.eq("trip_id", 5) // still hardcoded
 		.eq("user_id", profile?.id)
 		.single();
 
