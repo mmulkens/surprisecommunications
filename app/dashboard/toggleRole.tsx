@@ -5,7 +5,7 @@ import { useState } from "react";
 
 export default function ToggleRole({
   children,
-  revealBelow, // the text that appears inside the button when expanded
+  revealBelow,
 }: {
   children: React.ReactNode,
   revealBelow: React.ReactNode,
@@ -17,48 +17,52 @@ export default function ToggleRole({
       {/* CLICKABLE BUTTON */}
       <div
         onClick={() => setIsVisible(!isVisible)}
-        className="
-          bg-white/30 w-72 min-h-18 my-6 rounded-2xl p-3 text-center content-center font-bold 
-          select-none cursor-pointer
-        "
+        className="bg-white/30 w-72 min-h-18 my-6 rounded-2xl p-3 text-center font-bold select-none cursor-pointer"
       >
-        {/* TEXT WRAPPER WITH TRANSITIONS */}
-        <div
-          className={`
-            transition-all duration-700 ease-out
-            ${isVisible 
-              ? "text-5xl text-white/30 opacity-100"  // starts faded (white/30), grows to 5xl
-              : "text-2xl text-red-100 opacity-40"    // small, muted
-            }
-          `}
-        >
-          {/* HIDDEN STATE LABEL */}
-          {!isVisible && <div>Tap to reveal</div>}
+        <div className="relative h-12 flex items-center justify-center">
 
-          {/* REVEAL TEXT (fades from text-white/30 to text-red-100) */}
+          {/* TAP TO REVEAL  (always in DOM) */}
           <div
             className={`
-              transition-all duration-700 ease-out
-              ${isVisible 
-                ? "opacity-100 text-red-100" 
-                : "opacity-0"
+              absolute transition-all duration-900 ease-in
+              ${isVisible
+                ? "opacity-0 scale-90"
+                : "opacity-40 scale-100 text-2xl text-red-100"
               }
             `}
           >
-            {isVisible && revealBelow}
+            Tap to reveal
           </div>
+
+          {/* REVEAL TEXT (always in DOM) */}
+          <div
+            className={`
+              absolute transition-all duration-900 ease-in
+              ${isVisible
+                ? "opacity-100 scale-100 text-5xl text-red-100"
+                : "opacity-0 scale-90 text-white/30"
+              }
+            `}
+          >
+            {revealBelow}
+          </div>
+
         </div>
       </div>
 
       {/* SLIDE-DOWN CONTENT BELOW */}
       <div
         className={`
-          max-w-80 flex flex-col items-center
-          transition-all duration-700 ease-out
-          ${isVisible ? "opacity-100" : "max-h-0 opacity-0 mt-0"}
+         overflow-hidden transition-all duration-700 delay-400 ease-in
+          ${isVisible
+            ? "min-h-194 opacity-100"
+            : "min-h-0 opacity-0"
+          }
         `}
       >
-        {children}
+        <div className="max-w-80 py-2 flex flex-col items-center">
+          {children}
+        </div>
       </div>
     </>
   );
