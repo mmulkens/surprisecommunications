@@ -58,40 +58,40 @@ export default async function DashboardPage() {
 						Penalties can only be accumulated to a <b>maximum of nine points</b> to avoid being entirely eliminated from the drawing.
 					</p>
 					<div className="relative w-72 my-6 bg-white/30 px-4 rounded-2xl justify-items-center text-center">
-						<div className="absolute rounded-full translate-x-[-4em] translate-y-[8.2em] text-center content-center flex-col">
-							<div className="mb-3 text-sm text-red-200">Your penalty is</div>
-							<div className="text-5xl font-bold text-red-600/50">
+						<div className="absolute left-10 bottom-8 flex flex-col items-start">
+							<div className="mb-1 text-sm text-red-200">Your penalty is</div>
+							<div className="text-5xl font-bold text-red-600/50 leading-none">
 								{Math.round(sumPenalty)}
 								<sup>.{Math.round(-100 * (sumPenalty % 1))}</sup>
 							</div>
 						</div>
-						<div className="w-52 my-6 flex justify-between text-red-100 text-sm">
-						
-							<div className="w-8 flex-col justify-items-center">
-								<div className="font-bold mb-2">5</div>
-								<div className={`${checkPenalty(5) ? 'bg-red-500/70' : 'bg-red-200'} rounded-full w-4 h-6`}></div>
-								<div className="text-sm text-red-200 mt-1">-1<sup>.21</sup></div>
+						<div className="w-full flex justify-between text-red-100 text-sm my-6 px-4">
+							{[5,4,3,2,1].map((year,i) => (
+							<div key={year} className="flex flex-col items-center w-8">
+								<div className="font-bold mb-1">{year}</div>
+
+								{/* bar */}
+								<div
+								className={`${checkPenalty(year) ? 'bg-red-500/70' : 'bg-red-200'} 
+									rounded-full w-4`}
+								style={{
+									height: [
+									'30px',   // year 5
+									'37px',   // year 4
+									'54px',  // year 3
+									'127px',  // year 2
+									'165px',  // year 1
+									][i]
+								}}
+								/>
+
+								{/* bottom label */}
+								<div className="text-sm text-red-200 mt-1">
+								{['-1.21','-1.49','-2.18','-5.14','-6.64'][i]}
+								</div>
 							</div>
-							<div className="w-8 flex-col justify-items-center">
-								<div className="font-bold mb-2">4</div>
-								<div className={`${checkPenalty(4) ? 'bg-red-500/70' : 'bg-red-200'} rounded-full w-4 h-8`}></div>
-								<div className="text-sm text-red-200 mt-1">-1<sup>.49</sup></div>
-							</div>
-							<div className="w-8 flex-col justify-items-center">
-								<div className="font-bold mb-2">3</div>
-								<div className={`${checkPenalty(3) ? 'bg-red-500/70' : 'bg-red-200'} rounded-full w-4 h-12`}></div>
-								<div className="text-sm text-red-200 mt-1">-2<sup>.18</sup></div>
-							</div>
-							<div className="w-8 flex-col justify-items-center">
-								<div className="font-bold mb-2">2</div>
-								<div className={`${checkPenalty(2) ? 'bg-red-500/70' : 'bg-red-200'} rounded-full w-4 h-25`}></div>
-								<div className="text-sm text-red-200 mt-1">-5<sup>.14</sup></div>
-							</div>
-							<div className="w-8 flex-col justify-items-center">
-								<div className="font-bold mb-2">1</div>
-								<div className={`${checkPenalty(1) ? 'bg-red-500/70' : 'bg-red-200'} rounded-full w-4 h-33`}></div>
-								<div className="text-sm text-red-200 mt-1">-6<sup>.64</sup></div>
-							</div>
+							))}
+
 						</div>
 					</div>
 					{/* <div className="w-56 border-b-2 mt-3 mb-6 pl-2 pb-1 border-red-300/80 border-dashed text-red-300 text-sm">-9</div> */}
