@@ -58,7 +58,7 @@ export default async function DashboardPage() {
 						Penalties can only be accumulated to a <b>maximum of nine points</b> to avoid being entirely eliminated from the drawing.
 					</p>
 					<div className="relative w-72 my-6 bg-white/30 px-4 rounded-2xl justify-items-center text-center">
-						<div className="absolute rounded-full translate-x-[-60px] translate-y-[130px] text-center content-center flex-col">
+						<div className="absolute rounded-full translate-x-[-4em] translate-y-[8.2em] text-center content-center flex-col">
 							<div className="mb-3 text-sm text-red-200">Your penalty is</div>
 							<div className="text-5xl font-bold text-red-600/50">
 								{Math.round(sumPenalty)}
