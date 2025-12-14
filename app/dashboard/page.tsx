@@ -121,7 +121,6 @@ export default async function DashboardPage() {
 					<ToggleRole revealBelow={<div>{userRole[0].coorg.voornaam}</div>}>	
 
 				{/* // Section 5: Organizer information */}
-
 						{userRole[0].user_id == profile?.id ? (
 							<>
 								<img src="/icons/lock.png" className="icon-ph flex"/>

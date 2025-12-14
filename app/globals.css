@@ -4,7 +4,7 @@
 
 @layer base {
 	body {
-		background-image: linear-gradient(55deg, #CB1B44, #D42246, #E7430D, #ff7600, orange);
+		background-image: linear-gradient(50deg, #CB1B44, #D42246, #E7430D, #ff7600, orange);
 		font-family: 'Vend Sans';
 		font-weight: 300;
 	}
