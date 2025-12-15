@@ -50,25 +50,23 @@ export default async function DashboardPage() {
 					<img src="/icons/manSettingFlag.svg" className="icon-ph"/>
 					<p><b>Your chance</b> of being drawn to be one of the two organizers for the upcoming edition is:</p>
 					<div className="text-7xl my-3 text-center text-red-200 font-medium">{drawChance}%</div>
-					{/* <p>Some other general statistics include:</p>
-					<ul className="list-disc list-inside mb-6">
-						<li>You have participated in <b>{penalty.length}</b> out of <b>{defaultYear - 2018}</b> editions so far.</li>
-						<li>Your highest chance of being drawn was <b>{Math.max(...initialBarChart.map(item => item.kans_d))}%</b>.</li>
-						<li>Your lowest chance of being drawn was <b>{Math.min(...initialBarChart.map(item => item.kans_d))}%</b>.</li>
-					</ul>
-					<p>The calculation of your personal drawing chance is as follows:</p> */}
-					
+					<p>The odds of having a duo with <b>two first-time organizers</b> is <b className="text-red-200">51.8%</b>, 
+						while the chance of having a team of two organizers who both organized before is
+						<b className="text-red-200"> 5.5%</b>.
+					</p>
+					<p>Having the same team as last year has a minor chace of <b className="text-red-200 text">0.22%</b>,
+						while the least likely organizer combination (Joachim & Matthias) has only a chance of <b className="text-red-200">0.17%</b>.
+					</p>
 
-					
-					{/* <img src="/icons/abacus.png" className="icon-ph"/> */}
-					<p>This chance is derived as follows. To start, each of the participants gets <b>ten points</b>. From those points a <b>penalty</b> is subtracted, 
-						depending on how recently you have been an organizer. You get penalized up to five years ago, in an <b>exponentially</b> decreasing fashion.
+					<img src="/icons/cardChip.png" className="icon-ph"/>
+					<p>Your chance is derived as follows. To start, each of the participants gets <b>ten points</b>. From those points a <b>penalty</b> is subtracted, 
+						depending on how recently you have been an organizer. You get penalized up to five years ago, in an <b>exponentially</b> decreasing fashion as shown below.
 						Penalties can only be accumulated to a <b>maximum of nine points</b> to avoid being entirely eliminated from the drawing.
 					</p>
 					<div className="relative w-72 my-6 bg-white/30 px-4 rounded-2xl justify-items-center text-center">
 						<div className="absolute left-10 bottom-8 flex flex-col items-center">
 							<div className="mb-2 text-sm text-red-100">Your penalty is</div>
-							<div className="text-5xl font-bold text-red-600/40 leading-none">
+							<div className="text-5xl font-bold text-red-600/60 leading-none">
 								{Math.round(sumPenalty)}
 								<sup>.{Math.round(-100 * (sumPenalty % 1))}</sup>
 							</div>
@@ -80,7 +78,7 @@ export default async function DashboardPage() {
 
 								{/* bar */}
 								<div
-								className={`${checkPenalty(year) ? 'bg-red-600/40' : 'bg-red-100/50'} 
+								className={`${checkPenalty(year) ? 'bg-red-600/60' : 'bg-red-100/80'} 
 									rounded-full w-4`}
 								style={{
 									height: [
@@ -120,7 +118,7 @@ export default async function DashboardPage() {
 					
 				{/* // Section 4: Participant role */}
 
-					<img src="/icons/dice.png" className="icon-ph flex"/>
+					<img src="/icons/dice2.png" className="icon-ph flex"/>
 					<p>Below you can discover <b>your mission</b> for the next edition. If you are an organizer, the name of your co-organizer will appear. If not, the traveler role will be shown.</p>
 					
 					<ToggleRole revealBelow={<div>{userRole[0].coorg.voornaam}</div>}>	
