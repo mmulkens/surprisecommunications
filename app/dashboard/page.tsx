@@ -50,6 +50,14 @@ export default async function DashboardPage() {
 					<img src="/icons/manSettingFlag.svg" className="icon-ph"/>
 					<p><b>Your chance</b> of being drawn to be one of the two organizers for the upcoming edition is:</p>
 					<div className="text-7xl my-3 text-center text-red-200 font-medium">{drawChance}%</div>
+					{/* <p>Some other general statistics include:</p>
+					<ul className="list-disc list-inside mb-6">
+						<li>You have participated in <b>{penalty.length}</b> out of <b>{defaultYear - 2018}</b> editions so far.</li>
+						<li>Your highest chance of being drawn was <b>{Math.max(...initialBarChart.map(item => item.kans_d))}%</b>.</li>
+						<li>Your lowest chance of being drawn was <b>{Math.min(...initialBarChart.map(item => item.kans_d))}%</b>.</li>
+					</ul>
+					<p>The calculation of your personal drawing chance is as follows:</p> */}
+					
 
 					
 					{/* <img src="/icons/abacus.png" className="icon-ph"/> */}
@@ -58,9 +66,9 @@ export default async function DashboardPage() {
 						Penalties can only be accumulated to a <b>maximum of nine points</b> to avoid being entirely eliminated from the drawing.
 					</p>
 					<div className="relative w-72 my-6 bg-white/30 px-4 rounded-2xl justify-items-center text-center">
-						<div className="absolute left-10 bottom-8 flex flex-col items-start">
-							<div className="mb-1 text-sm text-red-200">Your penalty is</div>
-							<div className="text-5xl font-bold text-red-600/50 leading-none">
+						<div className="absolute left-10 bottom-8 flex flex-col items-center">
+							<div className="mb-2 text-sm text-red-100">Your penalty is</div>
+							<div className="text-5xl font-bold text-red-600/40 leading-none">
 								{Math.round(sumPenalty)}
 								<sup>.{Math.round(-100 * (sumPenalty % 1))}</sup>
 							</div>
@@ -72,7 +80,7 @@ export default async function DashboardPage() {
 
 								{/* bar */}
 								<div
-								className={`${checkPenalty(year) ? 'bg-red-500/70' : 'bg-red-200'} 
+								className={`${checkPenalty(year) ? 'bg-red-600/40' : 'bg-red-100/50'} 
 									rounded-full w-4`}
 								style={{
 									height: [
@@ -86,7 +94,7 @@ export default async function DashboardPage() {
 								/>
 
 								{/* bottom label */}
-								<div className="text-sm text-red-200 mt-1">
+								<div className="text-sm text-red-100 mt-1">
 								{['-1.21','-1.49','-2.18','-5.14','-6.64'][i]}
 								</div>
 							</div>
@@ -108,10 +116,7 @@ export default async function DashboardPage() {
 						profileId={profile?.id}
 						initialYear={defaultYear}
 						initialResults={initialBarChart}
-					/>
-
-				
-					
+					/>					
 					
 				{/* // Section 4: Participant role */}
 

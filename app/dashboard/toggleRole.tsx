@@ -12,6 +12,12 @@ export default function ToggleRole({
 }) {
   const [isVisible, setIsVisible] = useState(false);
 
+  // Check if children actually contains something
+  const hasChildren =
+    children !== null &&
+    children !== undefined &&
+    !(Array.isArray(children) && children.length === 0);
+
   return (
     <>
       {/* CLICKABLE BUTTON */}
@@ -51,6 +57,7 @@ export default function ToggleRole({
       </div>
 
       {/* SLIDE-DOWN CONTENT BELOW */}
+      {hasChildren && (
       <div
         className={`
          overflow-hidden transition-all duration-700 delay-400 ease-in
@@ -64,6 +71,7 @@ export default function ToggleRole({
           {children}
         </div>
       </div>
+      )}
     </>
   );
 }
