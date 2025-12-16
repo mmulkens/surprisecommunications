@@ -25,9 +25,13 @@ export default async function DashboardPage() {
 	// Get initial trip history state (for current year)
 	const initialTripHistory = await tripsFetch(defaultYear-1);
 
+	const unique = initialTripHistory?.filter(
+        row => row.user_id < row.coorganizer_id
+      );
+
 	console.log("User Role:", userRole);
 	console.log("User id:", profile);
-	console.log("Trip:", initialTripHistory);
+	console.log("Trip:", unique);
 	// console.log("Penalty:", penalty);
 	// console.log("Recency-1:", checkPenalty(1));
 
@@ -125,7 +129,7 @@ export default async function DashboardPage() {
 					<p>Feeling nostalgic? Below you find the <b>history of past trips</b> made since 2019.</p>
 
 					<PastTrips
-						initialYear={defaultYear}
+						initialYear={defaultYear-1}
 						initialResults={initialTripHistory}
 					/>
 

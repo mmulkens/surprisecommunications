@@ -3,10 +3,22 @@
 import userDataFetch from "./getUser";
 
 type TripRow = {
-  id: number,
-  bestemming: string,
-  land: string,
-  vertrekdatum: Date
+  trip_id: number;
+  user_id: string;
+  coorganizer_id: string;
+  trip: {
+    jaar: number;
+    bestemming: string;
+    land: string;
+    vertrekdatum: Date;
+    volgende: boolean
+  };
+  user: {
+    voornaam: string
+  };
+  coorg: {
+    voornaam: string
+  };
 };
 
 export default async function tripsFetch(year: number): Promise<TripRow[]> {
@@ -14,14 +26,27 @@ export default async function tripsFetch(year: number): Promise<TripRow[]> {
 
   const { data, error } = await supabase
     .schema("api")
-    .from("trips")
+    .from("organizers")
     .select(`
-      id,
-      bestemming,
-      land,
-      vertrekdatum
+      trip_id,
+      user_id,
+      coorganizer_id,
+      trip:trips!inner(
+        jaar,
+        bestemming,
+        land,
+        vertrekdatum,
+        volgende
+      ),
+			user:users!organizers_user_id_fkey (
+        voornaam
+			),
+			coorg:users!organizers_coorganizer_id_fkey (
+        voornaam
+			)
       `)
-    .filter("jaar", 'eq', year)
+    .filter("trip.jaar", "eq", year)
+    .neq("trip.volgende", true)
     ;
 
   if (error) {
