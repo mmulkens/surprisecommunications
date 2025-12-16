@@ -39,7 +39,7 @@ export default function PastTrips( { initialYear, initialResults} ) {
       {results && (
         <div >
           {results.map((item) => (
-            <div key={item.trip_id} className="flex-1 text-sm mt-2 mb-1.5">
+            <div key={item.trip_id + item.user_id} className="flex-1 text-sm mt-2 mb-1.5">
               <div className="text-white font-bold mb-1">Destination:</div>
               <div className="mb-2">{item.trip.bestemming}, {item.trip.land}</div>
               <div className="text-white font-bold mb-1">Departure date:</div>
