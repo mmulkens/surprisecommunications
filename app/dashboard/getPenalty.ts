@@ -9,9 +9,12 @@ type PenaltyRow = {
   trip: {
     jaar: number;
   };
+  user: {
+    voornaam: string;
+  };
 };
 
-export default async function userPenaltyFetch(year: number): Promise<PenaltyRow[]> {
+export default async function userPenaltyFetch(year: number, ptcp: string): Promise<PenaltyRow[]> {
   // 1. Get user data and supabase client
   const { supabase, profile } = await userDataFetch();
   
@@ -25,9 +28,12 @@ export default async function userPenaltyFetch(year: number): Promise<PenaltyRow
       penalty,
 			trip:trips!inner (
 				jaar
-		)
+		),
+      user:users!inner (
+        voornaam
+      ) 
     `)
-    .eq("user_id", profile?.id)
+    .eq("user.voornaam", ptcp)
     .filter("trip.jaar", 'eq', year)
     .order("recency")
     ;

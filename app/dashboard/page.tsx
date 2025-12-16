@@ -1,6 +1,7 @@
 import userDataFetch from "./getUser";
 import userChanceFetch from "./getChance";
 import userPenaltyFetch from "./getPenalty";
+import PenaltyChart from "./penaltyChart";
 import userChancesFetch from "./getChances";
 import BarChart from "./barChart";
 import ToggleRole from "./toggleRole";
@@ -16,9 +17,7 @@ export default async function DashboardPage() {
 	// Get this year's drawing chance for the current user
 	const { drawChance } = await userChanceFetch(defaultYear);
 	// Get penalty data
-	const penalty = await userPenaltyFetch(defaultYear)
-	const checkPenalty = (penRecency: number) => penalty.some( ({recency}) => recency == penRecency);
-	const sumPenalty = Math.round(100 * penalty.reduce((sum, current) => sum + current.penalty, 0)) /100;
+	const initialPenaltyChart = await userPenaltyFetch(defaultYear, profile?.voornaam);
 	// Get initial barchart state (for current year)
 	const initialBarChart = await userChancesFetch(defaultYear);
 	// Get the role for the upcoming trip
@@ -29,8 +28,8 @@ export default async function DashboardPage() {
 	console.log("User Role:", userRole);
 	console.log("User id:", profile);
 	console.log("Trip:", initialTripHistory);
-	console.log("Penalty:", penalty);
-	console.log("Recency-1:", checkPenalty(1));
+	// console.log("Penalty:", penalty);
+	// console.log("Recency-1:", checkPenalty(1));
 
 	return (
 		<main>
@@ -63,43 +62,11 @@ export default async function DashboardPage() {
 						depending on how recently you have been an organizer. You get penalized up to five years ago, in an <b>exponentially</b> decreasing fashion as shown below.
 						Penalties can only be accumulated to a <b>maximum of nine points</b> to avoid being entirely eliminated from the drawing.
 					</p>
-					<div className="relative w-72 my-6 bg-white/30 px-4 rounded-2xl justify-items-center text-center">
-						<div className="absolute left-10 bottom-8 flex flex-col items-center">
-							<div className="mb-2 text-sm text-red-100">Your penalty is</div>
-							<div className="text-5xl font-bold text-red-600/60 leading-none">
-								{Math.round(sumPenalty)}
-								<sup>.{Math.round(-100 * (sumPenalty % 1))}</sup>
-							</div>
-						</div>
-						<div className="w-full flex justify-between text-red-100 text-sm my-6 px-4">
-							{[5,4,3,2,1].map((year,i) => (
-							<div key={year} className="flex flex-col items-center w-8">
-								<div className="font-bold mb-1">{year}</div>
-
-								{/* bar */}
-								<div
-								className={`${checkPenalty(year) ? 'bg-red-600/60' : 'bg-red-100/80'} 
-									rounded-full w-4`}
-								style={{
-									height: [
-									'30px',   // year 5
-									'37px',   // year 4
-									'54px',  // year 3
-									'127px',  // year 2
-									'165px',  // year 1
-									][i]
-								}}
-								/>
-
-								{/* bottom label */}
-								<div className="text-sm text-red-100 mt-1">
-								{['-1.21','-1.49','-2.18','-5.14','-6.64'][i]}
-								</div>
-							</div>
-							))}
-
-						</div>
-					</div>
+					<PenaltyChart
+						profileId={profile?.id}
+						initialPtcp={profile?.voornaam}
+						initialResults={initialPenaltyChart}
+					/>
 					{/* <div className="w-56 border-b-2 mt-3 mb-6 pl-2 pb-1 border-red-300/80 border-dashed text-red-300 text-sm">-9</div> */}
 					<p>The points you retain form the <b>weights</b> in the sampling of two organizers.
 						Divided by the total of remaining points across all participants, they return your sampling odds.
