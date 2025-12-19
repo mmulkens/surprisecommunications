@@ -1,7 +1,12 @@
-'use client'
+'use client';
+
 import Link from "next/link";
 import signInWithEmail from "./logInInput";
-import { useFormStatus } from "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
+
+const initialState = {
+  error: undefined,
+};
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -10,7 +15,7 @@ function SubmitButton() {
     <button
       type="submit"
       disabled={pending}
-      className={`bg-red-600 hover:bg-red-500 w-36 ${ pending && "opacity-50" }`}
+      className={`bg-red-600 hover:bg-red-500 w-36 ${pending && "opacity-50"}`}
     >
       {pending ? "Logging in..." : "Log in"}
     </button>
@@ -18,16 +23,32 @@ function SubmitButton() {
 }
 
 export default function LoginPage() {
+  const [state, formAction] = useFormState(signInWithEmail, initialState);
+
   return (
     <main>
-      <img src="/icons/rocket.png" className="icon-ph"/>
+      <img src="/icons/rocket.png" className="icon-ph" />
       <h1>Log in</h1>
-      <form action={signInWithEmail} className="flex flex-col">
+
+      <form action={formAction} className="flex flex-col">
         <input name="email" type="email" placeholder="Email" required />
         <input name="password" type="password" placeholder="Password" required />
+
+        {/* Error banner */}
+        {state.error && (
+          <div className="bg-red-200 text-red-700 p-2 rounded-full px-4 py-2 m-1 text-sm">
+            ❌ {state.error}
+          </div>
+        )}
+
         <div className="flex justify-between mt-2">
           <Link href="/auth/welcome">
-            <button type="button" className="bg-gray-400 hover:bg-gray-500">Back</button>
+            <button
+              type="button"
+              className="bg-gray-400 hover:bg-gray-500"
+            >
+              Back
+            </button>
           </Link>
           <SubmitButton />
         </div>

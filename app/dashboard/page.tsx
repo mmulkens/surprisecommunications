@@ -64,7 +64,6 @@ export default async function DashboardPage() {
 					<img src="/icons/cardChip.png" className="icon-ph"/>
 					<p>Your chance is derived as follows. To start, each of the participants gets <b>ten points</b>. From those points a <b>penalty</b> is subtracted, 
 						depending on how recently you have been an organizer. You get penalized up to five years ago, in an <b>exponentially</b> decreasing fashion as shown below.
-						Penalties can only be accumulated to a <b>maximum of nine points</b> to avoid being entirely eliminated from the drawing.
 					</p>
 					<PenaltyChart
 						profileId={profile?.id}
@@ -72,13 +71,15 @@ export default async function DashboardPage() {
 						initialResults={initialPenaltyChart}
 					/>
 					{/* <div className="w-56 border-b-2 mt-3 mb-6 pl-2 pb-1 border-red-300/80 border-dashed text-red-300 text-sm">-9</div> */}
-					<p>The points you retain form the <b>weights</b> in the sampling of two organizers.
-						Divided by the total of remaining points across all participants, they return your sampling odds.
-					</p>
+					<p>Penalties can only be accumulated to a <b>maximum of nine points</b> to avoid being entirely eliminated from the drawing.</p>
+					
 					
 				{/* // Section 3: Barchart with all participants' chances and historic chances*/}
 
-					<img src="/icons/parachute.png" className="icon-ph"/>
+					<img src="/icons/piechart.png" className="icon-ph"/>
+					<p>The points you retain form the <b>weights</b> in the sampling of two organizers.
+						Divided by the total of remaining points across all participants, they return your sampling odds.
+					</p>
 					<p>In relation to the <b>other participants</b>, those odds look as follows. Change the trip edition to see historical data.</p>
 						
 					<BarChart
@@ -125,7 +126,7 @@ export default async function DashboardPage() {
 
 				{/* // Section 6: Organizer history */}
 
-					<img src="/icons/rocket.png" className="icon-ph flex"/>
+					<img src="/icons/hearts.png" className="icon-ph flex"/>
 					<p>Feeling nostalgic? Below you find the <b>history of past trips</b> made since 2019.</p>
 
 					<PastTrips
