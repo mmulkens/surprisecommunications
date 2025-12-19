@@ -21,10 +21,11 @@ export default function PenaltyChart( {profileId, initialPtcp, initialResults} )
       setResults(data);
     })
   }
+  console.log(results);
 
   // Get penalty data
   const checkPenalty = (penRecency) => results.some( ({recency}) => recency == penRecency);
-  const sumPenalty = Math.round(100 * results.reduce((sum, current) => sum + current.penalty, 0)) /100;
+  const sumPenalty = results.reduce((sum, current) => sum + current.penalty, 0 );
 
   return (
     <div className="w-72 my-6 bg-white/30 p-4 rounded-2xl text-center">
@@ -41,10 +42,10 @@ export default function PenaltyChart( {profileId, initialPtcp, initialResults} )
       {results && (
         <div >
           <div className="relative">
-						<div className="absolute left-8 bottom-0 flex flex-col items-center">
+						<div className="absolute left-8 bottom-0 w-24 flex flex-col items-center">
 							<div className="mb-2 text-sm text-red-100">Your penalty is</div>
 							<div className="text-5xl font-bold text-red-600/60 leading-none">
-								{Math.round(sumPenalty)}
+								{Math.ceil(sumPenalty)}
 								<sup>.{Math.round(-100 * (sumPenalty % 1))}</sup>
 							</div>
 						</div>

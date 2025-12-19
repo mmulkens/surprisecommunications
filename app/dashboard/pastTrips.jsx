@@ -39,26 +39,30 @@ export default function PastTrips( { initialYear, initialResults} ) {
       {results && (
         <div >
           {results.map((item) => (
-            <div key={item.trip_id + item.user_id} className="flex-1 text-sm mt-2 mb-1.5">
+            <div key={item.user_id} className="flex-1 text-sm mt-2 mb-1.5">
               <div className="text-white font-bold mb-1">Destination:</div>
-              <div className="mb-2">{item.trip.bestemming}, {item.trip.land}</div>
+              <div className="mb-2">{item.bestemming}, {item.land}</div>
               <div className="text-white font-bold mb-1">Departure date:</div>
-              <div className="mb-2">{item.trip.vertrekdatum}</div>
+              <div className="mb-2">{item.vertrekdatum}</div>
               <div className="text-white font-bold mb-1">Organizers:</div>
-              
-              <div className="my-2 flex justify-between px-8">
+
+              <div className="my-2 flex justify-center px-8">
                 <div className="flex-col">
-                  <div className={`bg-[url(/faz/${item.user.voornaam}.jpg)] bg-cover border-2 border-white rounded-full w-22 h-22`}>
+                  <div className="bg-cover rounded-full border-2 border-white w-22 h-22 mx-2"
+                    style={{ backgroundImage: `url(/faz/${item.org1}.jpg)` }}>
                   </div>
-                  <div className="mt-1 text-white font-bold">{item.user.voornaam}</div>
+                  <div className="mt-1 text-white font-bold">{item.org1}</div>
                 </div>
+                {item.user_id === item.coorganizer_id ? null : (
                 <div className="flex-col">
-                  <div className={`bg-[url(/faz/${item.coorg.voornaam}.jpg)] bg-cover rounded-full border-2 border-white w-22 h-22`}>
-                    {/* <div className="bg-white/10 border-2 border-white w-22 h-22 rounded-full"></div> */}
+                  <div className="bg-cover rounded-full border-2 border-white w-22 h-22 mx-2"
+                    style={{ backgroundImage: `url(/faz/${item.org2}.jpg)` }}>
                   </div>
-                  <div className="mt-1 text-white font-bold">{item.coorg.voornaam}</div>
+                  <div className="mt-1 text-white font-bold">{item.org2}</div>
                 </div>
+                )}
               </div>
+
             </div>
 			    ))}
         </div>
