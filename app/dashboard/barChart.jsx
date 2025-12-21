@@ -36,11 +36,11 @@ export default function BarChart( {profileId, initialYear, initialResults} ) {
       {results && (
         <div >
           {results.map((item) => (
-            <div key={item.user_id} className="flex text-sm mt-2 mb-1.5">
+            <div key={item.user_id} className="flex text-sm my-2.5">
               <span className="w-14 pr-2 text-xs text-white text-right">{item.users.voornaam}</span>
               <div className="h-4 flex-full flex w-48 rounded-full bg-red-100/50 text-red-900">
                 <div 
-                  style={{ width: `${12 + 6*item.kans_d}%` }}
+                  style={{ width: `${Math.min(12 + 6*item.kans_d, 95)}%` }}
                   className={`${item.user_id == profileId ? 'bg-red-600/70 text-white' : 'bg-red-100/70'} hover:bg-red-400 active:bg-red-400 hover:text-white h-4 pr-px rounded-l-full text-xs text-right transition-[width] duration-700 ease-in-out`}>
                     {item.kans_d}
                 </div>

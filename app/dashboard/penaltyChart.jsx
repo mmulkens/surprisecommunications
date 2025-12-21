@@ -57,7 +57,7 @@ export default function PenaltyChart( {profileId, initialPtcp, initialResults} )
 								{/* bar */}
 								<div
 								className={`${checkPenalty(year) ? 'bg-red-600/60' : 'bg-red-100/80'} 
-									rounded-full w-4`}
+									rounded-full w-4 transition-all duration-700 ease-in-out`}
 								style={{
 									height: [
 									'30px',   // year 5

@@ -57,7 +57,7 @@ export default async function DashboardPage() {
 						while the chance of having a team of two organizers who both organized before is
 						<b className="text-red-200"> 5.5%</b>.
 					</p>
-					<p>Having the same team as last year has a minor chace of <b className="text-red-200 text">0.22%</b>,
+					<p>Having the same team as last year has a minor chace of <b className="text-red-200">0.22%</b>,
 						while the least likely organizer combination (Joachim & Matthias) has only a chance of <b className="text-red-200">0.17%</b>.
 					</p>
 
@@ -91,7 +91,9 @@ export default async function DashboardPage() {
 				{/* // Section 4: Participant role */}
 
 					<img src="/icons/dice2.png" className="icon-ph flex"/>
-					<p>Below you can discover <b>your mission</b> for the next edition. If you are an organizer, the name of your co-organizer will appear. If not, the traveler role will be shown.</p>
+					<p>Below you can discover <b>your mission</b> for the next edition, which will be held in the weekend of
+						<b className="text-red-200"> the 9<sup>th</sup> to the 11<sup>th</sup> of October</b>.</p>
+					<p>If you are an organizer, the name of your coorganizer will appear. If not, the traveler role will be shown.</p>
 					
 					<ToggleRole revealBelow={<div>{userRole[0].coorg.voornaam}</div>}>	
 
@@ -106,17 +108,19 @@ export default async function DashboardPage() {
 								<p>Dear {userRole[0].user.voornaam}, you have been selected to organize the <b>{defaultYear} edition of the Surprise Trip </b> 
 									together with <b>{userRole[0].coorg.voornaam}</b>. Congratulations!
 								</p>
-								<p>To be successful at it, secret communication is key. Therefore access to the <b>surprise mailbox</b> is now being transferred to you.</p>
-								<p>The previous organizers have cleaned up their browser cache and password for the account, so a password reset is not strictly necessary.
-									Should you decide to alter it, make sure to <b>securely store</b> the new password for handover to the organizers of the {defaultYear+1} edition. 
-									Two-factor authentication is disabled for the account.
-								</p>
+
+								<p>To be successful, secret communication is key. Therefore access to the <b>surprise mailbox</b> has been transferred to you.</p>
+								<p>A password reset has been performed for you already, so the credentials below are active and <b>only known to you</b>. 
+									Please make sure to <b>securely store</b> the password, as this page might not be online throughout the year.</p>
+								
 								<div className="w-72 my-6 bg-white/30 p-4 rounded-2xl text-red-100 justify-items-center text-center">
 									<div className="text-[15px]">surprisecommunications@proton.me</div>
-									<div className="text-xl font-mono">DOqMCPqiw6n0jJi</div>
+									<div className="text-xl font-mono tracking-widest">2K@d3VcN1yN0E92Y</div>
 								</div>
-								<p>The dates for this edition have already been set, so the next steps are getting hands on with the practicalities of the organization.</p>
-								<p>Good luck!</p>
+
+								<p>Two-factor authentication is disabled for the account. Please keep it that way to facilitate handover next year.
+								</p>
+								<p>The dates for this edition have already been set, so the only thing left to do is to prepare for yet another fantastic trip! <b>Good luck!</b></p>
 							</>
 							) : (
 								null

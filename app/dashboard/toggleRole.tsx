@@ -62,7 +62,7 @@ export default function ToggleRole({
         className={`
          overflow-hidden transition-all duration-700 delay-400 ease-in
           ${isVisible
-            ? "min-h-194 opacity-100"
+            ? "min-h-188 opacity-100"
             : "min-h-0 opacity-0"
           }
         `}

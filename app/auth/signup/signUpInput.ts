@@ -1,9 +1,15 @@
 "use server";
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
-import Link from "next/link";
 
-export default async function signUpNewUser(formData: FormData) {
+type SignupState = {
+	error?: string;
+};
+
+export default async function signUpNewUser(
+	prevState: SignupState,
+	formData: FormData,
+): Promise<SignupState> {
 	
 	const supabase = await createClient();
 
@@ -25,7 +31,7 @@ export default async function signUpNewUser(formData: FormData) {
 	});
 
 	if (error) {
-		throw new Error(error.message);
+		return { error: error.message };
 	}
 
 	redirect("/dashboard");

@@ -72,6 +72,3 @@ export default function PastTrips( { initialYear, initialResults} ) {
     </div>
   )
 }
-
-
-// {`bg-[url(/faz/${item.user.voornaam}.jpg)] bg-cover rounded-full w-22 h-22`}
