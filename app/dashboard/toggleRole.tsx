@@ -30,7 +30,7 @@ export default function ToggleRole({
           {/* TAP TO REVEAL  (always in DOM) */}
           <div
             className={`
-              absolute transition-all duration-900 ease-in
+              absolute transition-all duration-700 ease-in
               ${isVisible
                 ? "opacity-0 scale-90"
                 : "opacity-40 scale-100 text-2xl text-red-100"
@@ -43,7 +43,7 @@ export default function ToggleRole({
           {/* REVEAL TEXT (always in DOM) */}
           <div
             className={`
-              absolute transition-all duration-900 ease-in
+              absolute transition-all duration-700 ease-in
               ${isVisible
                 ? "opacity-100 scale-100 text-5xl text-red-100"
                 : "opacity-0 scale-90 text-white/30"
@@ -60,7 +60,7 @@ export default function ToggleRole({
       {hasChildren && (
       <div
         className={`
-         overflow-hidden transition-all duration-700 delay-400 ease-in
+         overflow-hidden transition-all duration-500 delay-300 ease-in
           ${isVisible
             ? "min-h-188 opacity-100"
             : "min-h-0 opacity-0"

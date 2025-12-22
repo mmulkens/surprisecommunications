@@ -2,19 +2,19 @@
 import Link from "next/link";
 import signUpNewUser from "./signUpInput";
 import { useFormStatus } from "react-dom";
-import { useActionState } from "react";
+import { useState, useActionState } from "react";
 
 const initialState = {
 	error: undefined
 };
 
-function SubmitButton() {
+function SubmitButton({ disabled=true }) {
 	const { pending } = useFormStatus();
 
 	return (
 		<button
 			type="submit"
-			disabled={pending}
+			disabled={pending || disabled}
 			className={` bg-red-600 hover:bg-red-500 w-36 ${ pending && "opacity-50" }`}
 		>
 			{pending ? "Signing Up..." : "Sign Up"}
@@ -24,6 +24,10 @@ function SubmitButton() {
 
 export default function signUpPage() {
 	const [state, formAction] = useActionState(signUpNewUser, initialState);
+	const [password, setPassword] = useState("");
+	const [confirmPassword, setConfirmPassword] = useState("");
+	const passwordsDoNotMatch =
+		confirmPassword.length > 7 && password !== confirmPassword;
 
 	return (
 		<main>
@@ -40,20 +44,25 @@ export default function signUpPage() {
 					<input name="fname" type="text" placeholder="First Name" required/>
 					<input name="lname" type="text" placeholder="Last Name" required/>
 					<input name="email" type="email" placeholder="E-mail" required/>
-					<input name="password" type="password" placeholder="Password" required minLength={8}/>
+					<input name="password" type="password" placeholder="Password" required minLength={8} value={password} onChange={(e) => setPassword(e.target.value)}/>
+					<input name="cnfPassword" type="password" placeholder="Confirm Password" required minLength={8} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}/>
+						{passwordsDoNotMatch && (
+							<div className="bg-red-300 text-red-700 p-2 rounded-full px-4 py-2 m-1 text-sm">
+								❌ Passwords do not match
+							</div>
+						)}
 					<input name="nname" type="text" placeholder="Nickname (optional)" maxLength={20}/>
-
-					{state.error && (
-						<div className="bg-red-300 text-red-700 p-2 rounded-full px-4 py-2 m-1 text-sm">
-							❌ {state.error}
-						</div>
-					)}
+						{state.error && (
+							<div className="bg-red-300 text-red-700 p-2 rounded-full px-4 py-2 m-1 text-sm">
+								❌ {state.error}
+							</div>
+						)}
 
 					<div className="flex justify-between mt-6">
 						<Link href="/auth/welcome">
 							<button type="button" className="bg-gray-400 hover:bg-gray-500">Back</button>
 						</Link>
-						<SubmitButton />
+						<SubmitButton disabled={passwordsDoNotMatch}/>
 					</div>
 				</form>      
 			</div>

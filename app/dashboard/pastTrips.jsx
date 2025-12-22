@@ -64,10 +64,10 @@ export default function PastTrips( { initialYear, initialResults} ) {
               </div>
               
               
-              <video controls preload="metadata" playsInline className="rounded-2xl mt-6">
+              {/* <video controls preload="metadata" playsInline className="rounded-2xl mt-6">
                 <source src={`/vid/reveal${item.jaar}.mp4`} type="video/mp4" />
                 Your browser does not support video playback.
-              </video>
+              </video> */}
 
             </div>
 			    ))}
