@@ -6,6 +6,7 @@ type Item = {
 	name: string;
 	p: number;
 	count: number;
+	u?: number;
 	key?: number;
 	rank?: number;
 };
