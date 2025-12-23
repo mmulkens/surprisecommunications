@@ -76,7 +76,7 @@ export default async function DashboardPage() {
 					
 				{/* // Section 3: Barchart with all participants' chances and historic chances*/}
 
-					<img src="/icons/pcChart.png" className="icon-ph"/>
+					<img src="/icons/molecule.png" className="icon-ph"/>
 					<p>The points you retain form the <b>weights</b> in the sampling of two organizers.
 						Divided by the total of remaining points across all participants, they return your sampling odds.
 					</p>
