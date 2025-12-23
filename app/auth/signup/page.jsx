@@ -35,7 +35,7 @@ export default function signUpPage() {
 			<h1>Sign up</h1>
 			<p className="text-center">Register your name and e-mail to access your role on the upcoming Surprise Trip. Use your known surprise communication e-mail.</p>
 			
-			<p className="bg-yellow-100/50 text-amber-700 p-2 rounded-full px-4 py-2 m-1 text-xs">
+			<p className="bg-yellow-100/70 text-amber-800 p-2 rounded-full px-4 py-2 m-1 text-xs">
 				<span className="text-sm">⚠️ </span> 
 				Profile changes not possible after registration.
 			</p>
@@ -60,7 +60,7 @@ export default function signUpPage() {
 
 					<div className="flex justify-between mt-6">
 						<Link href="/auth/welcome">
-							<button type="button" className="bg-gray-400 hover:bg-gray-500">Back</button>
+							<button type="button" className="w-24 bg-gray-500/50 hover:bg-gray-200/50">Back</button>
 						</Link>
 						<SubmitButton disabled={passwordsDoNotMatch}/>
 					</div>

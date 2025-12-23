@@ -47,7 +47,7 @@ export default function LoginPage() {
           <Link href="/auth/welcome">
             <button
               type="button"
-              className="bg-gray-400 hover:bg-gray-500"
+              className="w-24 bg-gray-500/50 hover:bg-gray-200/50"
             >
               Back
             </button>

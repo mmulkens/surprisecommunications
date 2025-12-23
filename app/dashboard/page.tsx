@@ -8,6 +8,7 @@ import ToggleRole from "./toggleRole";
 import userRoleFetch from "./getRole";
 import tripsFetch from "./getTrips";
 import PastTrips from "./pastTrips";
+import AResSimulation from "./aResSim";
 
 export default async function DashboardPage() {
 	// Set the default year (hardcoded, should be active trip year)
@@ -138,10 +139,14 @@ export default async function DashboardPage() {
 						initialResults={initialTripHistory}
 					/>
 
+				{/* // Section TEST: SIMULATION */}
+
+					<AResSimulation/>
+
 				{/* // Section 7: Log out	 */}
 				
 					<form action="/auth/logout" method="post">
-						<div className="flex justify-between my-10">
+						<div className="w-24 flex justify-between my-10">
 							<button type="submit" className="bg-red-500 hover:bg-red-600">Log out</button>
 						</div>
 					</form>

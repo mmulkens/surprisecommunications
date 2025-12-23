@@ -9,10 +9,10 @@ export default function HomePage() {
       <p>Please log in to access your personal dashboard and plan the next trip!</p>
       <div className="mt-4 justify-center flex">
         <Link href="/auth/login">
-          <button className="bg-red-600 hover:bg-red-500">Log In</button> 
+          <button className="w-24 bg-red-600 hover:bg-red-500">Log In</button> 
         </Link>
         <Link href="/auth/signup">
-          <button className="bg-gray-400 hover:bg-gray-500">Sign Up</button>
+          <button className="w-24 bg-gray-500/50 hover:bg-gray-200/50">Sign Up</button>
         </Link>
       </div>
     </main>
