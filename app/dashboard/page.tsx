@@ -30,9 +30,9 @@ export default async function DashboardPage() {
         row => row.user_id < row.coorganizer_id
       );
 
-	console.log("User Role:", userRole);
-	console.log("User id:", profile);
-	console.log("Trip:", unique);
+	// console.log("User Role:", userRole);
+	// console.log("User id:", profile);
+	// console.log("Trip:", unique);
 	// console.log("Penalty:", penalty);
 	// console.log("Recency-1:", checkPenalty(1));
 
@@ -99,7 +99,7 @@ export default async function DashboardPage() {
 						K<sub>i</sub> = 100 * U<sub>i</sub><sup>1/p<sub>i</sub></sup> 
 					</div> */}
 					<div className="w-72 my-4 bg-white/30 p-4 rounded-2xl justify-items-center text-center">
-						<div className="text-white pb-2 font-semibold border-b border-red-100/50 text-lg tracking-widest">K<sub>i</sub> = 100 * U<sub>i</sub><sup>1/p<sub>i</sub></sup></div>
+						<div className="text-white pb-2 font-semibold border-b border-red-100/50 text-lg tracking-wider">K<sub>i</sub> = 100 * U<sub>i</sub><sup>1/p<sub>i</sub></sup></div>
 						<p className="text-sm"><b className="highlight tracking-widest">U<sub>i</sub></b> is a uniform random number (0 to 1)</p>
 						<p className="text-sm"><b className="highlight tracking-widest">p<sub>i</sub></b> is the probability of participant i.</p>
 					</div>
