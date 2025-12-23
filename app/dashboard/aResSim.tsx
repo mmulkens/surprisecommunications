@@ -73,13 +73,13 @@ export default function AResSimulation() {
       <div className="flex items-center justify-baseline mb-2">
         <button
           onClick={sample}
-					className="bg-red-600/50 hover:bg-red-600"
+					className="bg-red-600/50 hover:bg-red-600 active:bg-red-600"
         >
           Sample
         </button>
         <button
           onClick={reset}
-          className="bg-gray-500/50 hover:bg-gray-200/50 hover:text-gray-600"
+          className="bg-gray-500/50 hover:bg-gray-200/50 active:bg-gray-200/50"
         >
           Reset
         </button>

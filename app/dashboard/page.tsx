@@ -4,11 +4,11 @@ import userPenaltyFetch from "./getPenalty";
 import PenaltyChart from "./penaltyChart";
 import userChancesFetch from "./getChances";
 import BarChart from "./barChart";
+import AResSimulation from "./aResSim";
 import ToggleRole from "./toggleRole";
 import userRoleFetch from "./getRole";
 import tripsFetch from "./getTrips";
 import PastTrips from "./pastTrips";
-import AResSimulation from "./aResSim";
 
 export default async function DashboardPage() {
 	// Set the default year (hardcoded, should be active trip year)
@@ -54,30 +54,29 @@ export default async function DashboardPage() {
 					<img src="/icons/manSettingFlag.svg" className="icon-ph"/>
 					<p><b>Your chance</b> of being drawn to be one of the two organizers for the upcoming edition is:</p>
 					<div className="text-7xl my-3 text-center text-red-200 font-medium">{drawChance}%</div>
-					<p>The odds of having a duo with <b>two first-time organizers</b> is <b className="text-red-200">51.8%</b>, 
+					<p>The odds of having a duo with <b>two first-time organizers</b> is <b className="highlight">51.8%</b>, 
 						while the chance of having a team of two organizers who both organized before is
-						<b className="text-red-200"> 5.5%</b>.
+						<b className="highlight"> 5.5%</b>.
 					</p>
-					<p>Having the same team as last year has a minor chace of <b className="text-red-200">0.22%</b>,
-						while the least likely organizer combination (Joachim & Matthias) has only a chance of <b className="text-red-200">0.17%</b>.
+					<p>Having the same team as last year has a minor chace of <b className="highlight">0.22%</b>,
+						while the least likely organizer combination (Joachim & Matthias) has only a chance of <b className="highlight">0.17%</b>.
 					</p>
 
 					<img src="/icons/cardChip.png" className="icon-ph"/>
 					<p>Your chance is derived as follows. To start, each of the participants gets <b>ten points</b>. From those points a <b>penalty</b> is subtracted, 
 						depending on how recently you have been an organizer. You get penalized up to five years ago, in an <b>exponentially</b> decreasing fashion as shown below.
-					</p>
+						Penalties can only be accumulated to a <b>maximum of nine points</b> to avoid being entirely eliminated from the drawing.</p>
 					<PenaltyChart
 						profileId={profile?.id}
 						initialPtcp={profile?.voornaam}
 						initialResults={initialPenaltyChart}
 					/>
 					{/* <div className="w-56 border-b-2 mt-3 mb-6 pl-2 pb-1 border-red-300/80 border-dashed text-red-300 text-sm">-9</div> */}
-					<p>Penalties can only be accumulated to a <b>maximum of nine points</b> to avoid being entirely eliminated from the drawing.</p>
 					
 					
 				{/* // Section 3: Barchart with all participants' chances and historic chances*/}
 
-					<img src="/icons/piechart.png" className="icon-ph"/>
+					<img src="/icons/pcChart.png" className="icon-ph"/>
 					<p>The points you retain form the <b>weights</b> in the sampling of two organizers.
 						Divided by the total of remaining points across all participants, they return your sampling odds.
 					</p>
@@ -89,19 +88,42 @@ export default async function DashboardPage() {
 						initialResults={initialBarChart}
 					/>					
 					
-				{/* // Section 4: Participant role */}
+				{/* // Section 4: Simulation engine */}
+					<img src="/icons/codeUser.png" className="icon-ph flex"/>
+					<p>Curious to see how the drawing could pan out? Use the <b>simulator</b> below to draw organizers 
+						multiple times and see how often you would be selected based on your chance.</p>
+					<p>The drawing is based on the <b>Efraimidis–Spirakis A-Res algorithm</b>.
+						It is made to mimic a weighted sampling without replacement, which is exactly what we need.</p>
+					<p>In essence, it generates a <b>sort key</b> <b className="highlight tracking-widest">K<sub>i</sub></b> for each participant using the formula:</p>
+					{/* <div className="text-center text-white font-semibold text-lg tracking-widest my-2 bg-red-100/50 rounded-full px-6 py-2 inline-block">
+						K<sub>i</sub> = 100 * U<sub>i</sub><sup>1/p<sub>i</sub></sup> 
+					</div> */}
+					<div className="w-72 my-4 bg-white/30 p-4 rounded-2xl justify-items-center text-center">
+						<div className="text-white pb-2 font-semibold border-b border-red-100/50 text-lg tracking-widest">K<sub>i</sub> = 100 * U<sub>i</sub><sup>1/p<sub>i</sub></sup></div>
+						<p className="text-sm"><b className="highlight tracking-widest">U<sub>i</sub></b> is a uniform random number (0 to 1)</p>
+						<p className="text-sm"><b className="highlight tracking-widest">p<sub>i</sub></b> is the probability of participant i.</p>
+					</div>
+					{/* <p className="text-sm"><b className="highlight tracking-widest">U<sub>i</sub></b> is a uniform random number (0 to 1)</p>
+					<p className="text-sm"><b className="highlight tracking-widest">p<sub>i</sub></b> is the drawing probability of participant i.</p> */}
+					<p>The two participants with the highest sort keys are selected. Therefore,
+						participants with a low probability, thus a higher power exponent, need a high random number to bubble up to the top,  
+						while participants with a high probability, have their lower power exponent working to their advantage.</p>
+					{/* <p>A number between 0 and 1 to a low power has a greater chance to remain close to 1 (relatively large) than that same number to a higher power</p> */}
+					<AResSimulation/>
+
+				{/* // Section 5: Participant role */}
 
 					<img src="/icons/dice2.png" className="icon-ph flex"/>
-					<p>Below you can discover <b>your mission</b> for the next edition, which will be held in the weekend of
-						<b className="text-red-200"> the 9<sup>th</sup> to the 11<sup>th</sup> of October</b>.</p>
-					<p>If you are an organizer, the name of your coorganizer will appear. If not, the traveler role will be shown.</p>
+					<p>Below you can see what the algorithm has done this year and discover <b>your mission</b> for the next edition. It will be held in the weekend of
+						<b className="highlight"> the 9<sup>th</sup> to the 11<sup>th</sup> of October</b>.</p>
+					<p>If you are an organizer, the name of your coorganizer will appear. If not, the travler role will be shown.</p>
 					
 					<ToggleRole revealBelow={<div>{userRole[0].coorg.voornaam}</div>}>	
 
-				{/* // Section 5: Organizer information */}
+				{/* // Section 6: Organizer information */}
 						{userRole[0].user_id == profile?.id ? (
 							<>
-								<img src="/icons/lock.png" className="icon-ph flex"/>
+								{/* <img src="/icons/lock.png" className="icon-ph flex mt-0 mb-4"/> */}
 								{/* <div className="text-lg text-white w-72 mt-4 min-h-10 font-bold p-1 bg-emerald-500 border-2 border-white rounded-xl content-center text-center">
 									auth_user: {userRole[0].user_id}, 
 									org_users: {userRole[0].user_id} & {userRole[0].coorganizer_id}
@@ -111,6 +133,7 @@ export default async function DashboardPage() {
 								</p>
 
 								<p>To be successful, secret communication is key. Therefore access to the <b>surprise mailbox</b> has been transferred to you.</p>
+								<img src="/icons/lock.png" className="icon-ph flex my-4"/>
 								<p>A password reset has been performed for you already, so the credentials below are active and <b>only known to you</b>. 
 									Please make sure to <b>securely store</b> the password, as this page might not be online throughout the year.</p>
 								
@@ -129,7 +152,7 @@ export default async function DashboardPage() {
 						}
 					</ToggleRole>
 
-				{/* // Section 6: Organizer history */}
+				{/* // Section 7: Organizer history */}
 
 					<img src="/icons/hearts.png" className="icon-ph flex"/>
 					<p>Feeling nostalgic? Below you find the <b>history of past trips</b> made since 2019.</p>
@@ -139,14 +162,10 @@ export default async function DashboardPage() {
 						initialResults={initialTripHistory}
 					/>
 
-				{/* // Section TEST: SIMULATION */}
-
-					<AResSimulation/>
-
-				{/* // Section 7: Log out	 */}
+				{/* // Section 8: Log out	 */}
 				
 					<form action="/auth/logout" method="post">
-						<div className="w-24 flex justify-between my-10">
+						<div className="flex justify-between my-10">
 							<button type="submit" className="bg-red-500 hover:bg-red-600">Log out</button>
 						</div>
 					</form>
