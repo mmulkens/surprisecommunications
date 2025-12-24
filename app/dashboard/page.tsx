@@ -58,7 +58,7 @@ export default async function DashboardPage() {
 						while the chance of having a team of two organizers who both organized before is
 						<b className="highlight"> 5.5%</b>.
 					</p>
-					<p>Having the same team as last year has a minor chace of <b className="highlight">0.22%</b>,
+					<p>Having the same team as last year has a minor chance of <b className="highlight">0.22%</b>,
 						while the least likely organizer combination (Joachim & Matthias) has only a chance of <b className="highlight">0.17%</b>.
 					</p>
 
